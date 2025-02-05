@@ -1,3 +1,5 @@
+## *STILL NEED TO INSTALL REACT-ROUTER-DOM AND CREATE ROUTES FOR PAGES
+
 ## Initial setup for Vite + React
 1. npm create vite@latest
 2. Framework: React
