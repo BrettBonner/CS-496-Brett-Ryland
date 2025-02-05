@@ -1,5 +1,4 @@
-import React from 'react';
-import '../styles/Facilities.css';
+import './Facilities.css';
 
 const Facilities = () => {
   return (

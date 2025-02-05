@@ -2,17 +2,16 @@
     text-align: center;
     padding: 60px 20px;
     background: #f9f9f9;
-  }
+}
   
-  .section-title {
+.section-title {
     color: #007bff;
     font-size: 18px;
     text-transform: uppercase;
-  }
-  
-  .section-subtitle {
+}
+
+.section-subtitle {
     font-size: 28px;
     font-weight: bold;
     margin-top: 10px;
-  }
-  
+}

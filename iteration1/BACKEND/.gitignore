@@ -1,0 +1,3 @@
+# Config file for MongoDB
+config.env
+node_modules
