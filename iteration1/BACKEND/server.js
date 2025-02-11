@@ -17,5 +17,6 @@ app.use(express.json())
 // Once connection is established, connects to port and MongoDB
 app.listen(PORT, () => {
     connect.connectToServer()
-    console.log('Backend server is running on port 3000')
+    console.log('Backend server is running on port: ')
+    console.log(PORT)
 })

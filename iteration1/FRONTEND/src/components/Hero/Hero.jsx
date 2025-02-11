@@ -1,7 +1,7 @@
 import React from "react";
-import "../styles/HeroSection.css"; 
+import "./Hero.css"; 
 
-function HeroSection() {
+function Hero() {
   return (
     <section className="hero-container">
       {/* Large Centered Logo */}
@@ -15,5 +15,5 @@ function HeroSection() {
   );
 }
 
-export default HeroSection;
+export default Hero;
 

@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/Navbar.css"; // Make sure this path is correct
+import "./Navbar.css"; // Make sure this path is correct
 
 function Navbar() {
   return (
@@ -7,7 +7,7 @@ function Navbar() {
       <div className="navbar-container">
         {/* Left Side - Logo */}
         <div className="logo">
-          <img src="/MainLogo.jpeg" alt="Assisted Living Direct" />
+          <img src="../src/assets/MainLogo.jpeg" alt="Assisted Living Direct" />
           <span>Assisted Living Direct</span>
         </div>
 
