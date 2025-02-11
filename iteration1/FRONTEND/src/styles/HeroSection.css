@@ -1,0 +1,53 @@
+.hero-container {
+    width: 100%;
+    height: 90vh;  /* Full screen height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: url('/MainLogo.jpg') center/cover no-repeat; 
+    position: relative;
+    text-align: center;
+  }
+  
+  /* Logo Styling */
+  .hero-logo {
+    width: 100%; /* Adjust size as needed */
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  /* Hero Text */
+  .hero-content {
+    text-align: center;
+    color: white;
+    z-index: 2;
+  }
+  
+  .hero-content h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-content h2 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+  
+  /* Call to Action Button */
+  .cta-button {
+    background-color: #ff0080;
+    color: white;
+    padding: 12px 24px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .cta-button:hover {
+    opacity: 0.9;
+  }
+  

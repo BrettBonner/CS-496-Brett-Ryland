@@ -1,0 +1,74 @@
+/* Navbar Container */
+.navbar {
+    width: 100%;
+    background: #0b0223;  /* Dark Purple from Screenshot */
+    padding: 15px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+  }
+  
+  /* Navbar Content Wrapper */
+  .navbar-container {
+    width: 90%;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  /* Logo Section */
+  .logo {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    gap: 10px;
+  }
+  
+  .logo img {
+    width: 40px;
+    height: auto;
+  }
+  
+  /* Navigation Links */
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+  }
+  
+  .nav-links li {
+    display: inline-block;
+  }
+  
+  .nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+  }
+  
+  .nav-links a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Featured Facilities Button */
+  .featured-btn {
+    background-color: #ff0080;  /* Pink */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .featured-btn:hover {
+    opacity: 0.9;
+  }
+  
