@@ -1,7 +1,7 @@
 /* Navbar Container */
 .navbar {
   width: 100%;
-  background: var(--blue);  /* Using the blue from color scheme */
+  background: white;  /* Using the blue from color scheme */
   padding: 15px 20px;
   display: flex;
   justify-content: center;
@@ -19,6 +19,24 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.right-container {
+  display: flex; /* Aligns items in a row */
+  justify-content: center; /* Centers the items horizontally */
+  align-items: center; /* Centers them vertically */
+  background-color: black;
+  color: white; /* Background for the container */ 
+  padding-left: 15px;
+  border-radius: 12px; /* Rounded corners */
+  gap: 20px; /* Space between elements */
+}
+
+.right-container a {
+  color: white !important;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: opacity 0.25s ease;
 }
 
 /* Logo Section */
@@ -60,17 +78,28 @@
   opacity: 0.8;
 }
 
-/* Featured Facilities Button */
 .featured-btn {
   background-color: var(--magenta);
-  color: var(--white);
-  padding: 10px 15px;
+  color: white;
+  padding: 10px 20px; /* Adjusted padding */
+  font-size: 1rem;
   border: none;
   border-radius: 8px;
-  font-size: 1rem;
   cursor: pointer;
   transition: opacity 0.25s ease;
+  margin-left: -5px; /* Moves it even closer */
 }
+
+
+.Featured-Facil {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px; /* Reduce padding to bring it closer */
+  margin-left: -5px; /* Moves it closer to the black container */
+}
+
+
 
 .featured-btn:hover {
   opacity: 0.9;

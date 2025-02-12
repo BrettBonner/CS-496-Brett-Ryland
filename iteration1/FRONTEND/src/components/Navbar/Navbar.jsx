@@ -9,15 +9,14 @@ function Navbar() {
         <div className="logo">
           <img src="../src/assets/navbarlogo.jpg" alt="Assisted Living Direct" />
         </div>
-
+        <div className="right-container">
+          <a href="#">Find Assisted Living</a>
+          <a href="#">Contact</a>
+          <div className="Featured-Facil">
+            <button className="featured-btn">Featured Facilities ❤️</button>
+          </div>
+        </div>
         {/* Center - Links */}
-        <ul className="nav-links">
-          <li><a href="#">Find Assisted Living</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-
-        {/* Right Side - Featured Facilities Button */}
-        <button className="featured-btn">Featured Facilities ❤️</button>
       </div>
     </nav>
   );
