@@ -7,8 +7,7 @@ function Navbar() {
       <div className="navbar-container">
         {/* Left Side - Logo */}
         <div className="logo">
-          <img src="../src/assets/MainLogo.jpeg" alt="Assisted Living Direct" />
-          <span>Assisted Living Direct</span>
+          <img src="../src/assets/navbarlogo.jpg" alt="Assisted Living Direct" />
         </div>
 
         {/* Center - Links */}

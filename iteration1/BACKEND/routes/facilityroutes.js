@@ -3,14 +3,19 @@ let facilityRoutes = express.Router()
 const { getDB } = require('../mongo-connect')
 const { ObjectId } = require('mongodb')
 
-// Frontend will send an http request for the backend and these are the routes for connecting
-// the frontend to the backend. Each route corresponds to a different functionality for
-// managing the database
+// Collection name from database cluster
+const dbcollection = "Facility Info V2"
+
+// Frontend will send an http request for the backend 
+// and these are the routes for connecting the frontend 
+// to the backend. Each route corresponds to a different 
+// functionality for managing the database
 
 // Retrieve all facilities
 facilityRoutes.route("/facilities").get(async (request, response) => {
     let db = getDB();
-    let data = await db.collection("Facility Info V2").find({}).toArray();
+    // Converts raw database information into an array
+    let data = await db.collection(dbcollection).find({}).toArray();
     if (data.length > 0) {
         response.json(data);
     } else {
@@ -21,7 +26,8 @@ facilityRoutes.route("/facilities").get(async (request, response) => {
 // Retrieving specific facility
 facilityRoutes.route("/facilities").get(async (request, response) => {
     let db = getDB();
-    let facility = await db.collection("Facility Info V2").findOne({ _id: new ObjectId(request.params.id) });
+    // Retrieve data for a specific facility by the facility's ID
+    let facility = await db.collection(dbcollection).findOne({ _id: new ObjectId(request.params.id) });
     if (facility) {
         response.json(facility);
     } else {
@@ -32,14 +38,13 @@ facilityRoutes.route("/facilities").get(async (request, response) => {
 // Creating a new facility
 facilityRoutes.route("/facilities").post(async (request, response) => {
     let db = getDB();
-    let result = await db.collection("Facility Info V2").insertOne(request.body);
-    response.status(201).json(result);
+    let result = await db.collection(dbcollection).insertOne(request.body);
 });
 
 // Updating facility information
 facilityRoutes.route("/facilities").put(async (request, response) => {
     let db = getDB();
-    let result = await db.collection("Facility Info V2").updateOne(
+    let result = await db.collection(dbcollection).updateOne(
         { _id: new ObjectId(request.params.id) },
         { $set: request.body }
     );
@@ -53,7 +58,7 @@ facilityRoutes.route("/facilities").put(async (request, response) => {
 // Deleting a facility
 facilityRoutes.route("/facilities").delete(async (request, response) => {
     let db = getDB();
-    let result = await db.collection("Facility Info V2").deleteOne({ _id: new ObjectId(request.params.id) });
+    let result = await db.collection(dbcollection).deleteOne({ _id: new ObjectId(request.params.id) });
     if (result.deletedCount > 0) {
         response.json({ message: "Facility deleted successfully" });
     } else {

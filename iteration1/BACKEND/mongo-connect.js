@@ -1,7 +1,7 @@
 require("dotenv").config({ path: "./config.env" });
 const { MongoClient, ServerApiVersion } = require("mongodb");
 
-// Create a MongoClient with your Atlas connection string
+// Create a MongoClient with the Atlas connection string
 const client = new MongoClient(process.env.ATLAS_URI, {
   serverApi: {
     version: ServerApiVersion.v1,

@@ -12,9 +12,9 @@
   
   /* Logo Styling */
   .hero-logo {
-    width: 100%; /* Adjust size as needed */
+    width: 40%; /* Adjust size as needed */
     height: auto;
-    margin-bottom: 20px;
+    margin-top: 12vh;
   }
   
   /* Hero Text */

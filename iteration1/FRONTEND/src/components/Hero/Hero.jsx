@@ -6,7 +6,7 @@ function Hero() {
     <section className="hero-container">
       {/* Large Centered Logo */}
       <div className="hero-content">
-        <img src="/MainLogo.jpeg" alt="Main Logo" className="hero-logo" />
+        <img src="../src/assets/MainLogo.jpeg" alt="Main Logo" className="hero-logo" />
         <h2>Find The Perfect Home For Your Loved Ones</h2>
         <h1>Discover All Assisted Living in Maryland</h1>
         <button className="cta-button">Find Your Facilities</button>
