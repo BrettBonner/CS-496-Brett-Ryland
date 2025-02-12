@@ -1,32 +1,48 @@
-import React from "react";
-import { getFacilities, createFacility, deleteFacility, getFacilityById } from "./api";
-import { useState, useEffect } from "react";
-
-import Navbar from "./components/Navbar/Navbar"; 
-import Hero from "./components/Hero/Hero"; 
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import { getFacilities } from "./api";
+import Navbar from "./components/Navbar/Navbar";
+import Hero from "./components/Hero/Hero";
+import Facility from "./components/Facility/Facility";
+import FacilityPage from "./components/FacilityPage/FacilityPage";
 
 function App() {
-  // Variables used for storing data from database for facilities
-  const [data, setData] = useState()
+  const [facilities, setFacilities] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  // Fetching facilities from database via API functions
-  useEffect(() => {
-    async function loadAllFacilities() {
-      let data = await getFacilities()
-      if (data) {
-        setData(data)
+  const fetchFacilities = async () => {
+    setLoading(true);
+    setError(null);
+  
+    try {
+      const data = await getFacilities();
+      console.log("API Response:", data); // ✅ Debug API Data
+      if (data && data.length > 0) {
+        setFacilities(data);
+      } else {
+        console.warn("No facilities found from API.");
       }
+    } catch (error) {
+      setError("Error fetching facility data.");
+      console.error("Error fetching facilities:", error);
+    } finally {
+      setLoading(false);
     }
-
-    loadAllFacilities()
-  }, [])
+  };
+  
 
   return (
-    <div>
-      <Hero></Hero>
-      <Navbar></Navbar>
-      {JSON.stringify(data)}
-    </div>
+    <Router>
+      <Navbar />
+      <Routes>
+        {/* Home Page */}
+        <Route path="/" element={<Hero fetchFacilities={fetchFacilities} />} />
+
+        {/* New Facilities Page */}
+        <Route path="/facilities" element={<FacilityPage facilities={facilities} />} />
+      </Routes>
+    </Router>
   );
 }
 
