@@ -6,12 +6,13 @@ function Facility({ facilities }) {
 
   return (
     <div className="facilities-container">
-      <div className="facilities-grid">
+      {/* Left-side scrolling list */}
+      <div className="facilities-list">
         {facilities.slice(0, visibleCount).map((facility, index) => {
           // Ensure the Medicaid Certified field is processed correctly
           const isMedicaidCertified =
             facility["Medicaid Certified"]?.trim().toLowerCase() === "yes";
-
+  
           return (
             <div key={index} className="facility-card">
               <h3>{facility.Licensee || "No Name"}</h3>
@@ -26,16 +27,22 @@ function Facility({ facilities }) {
             </div>
           );
         })}
+  
+        {/* Load More Button inside list */}
+        {visibleCount < facilities.length && (
+          <button className="load-more" onClick={() => setVisibleCount(visibleCount + 50)}>
+            Load More Facilities
+          </button>
+        )}
       </div>
-
-      {/* Load More Button */}
-      {visibleCount < facilities.length && (
-        <button className="load-more" onClick={() => setVisibleCount(visibleCount + 50)}>
-          Load More Facilities
-        </button>
-      )}
+  
+      {/* Right-side Map Container */}
+      <div className="map-container">
+        {/* Your map component goes here */}
+      </div>
     </div>
   );
+  
 }
 
 export default Facility;
