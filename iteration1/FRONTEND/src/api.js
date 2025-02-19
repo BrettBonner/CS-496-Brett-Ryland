@@ -2,8 +2,7 @@ import axios from "axios";
 
 const URL = "http://localhost:3000/facilities";
 
-// Frontend API functions for retrieving 
-// data from backend routes
+// Frontend API functions for retrieving data from backend routes
 
 // Retrieve all facilities
 export async function getFacilities() {
@@ -28,9 +27,19 @@ export async function getFacilityById(id) {
 }
 
 // Create a new facility
-export async function createFacility(facilityData) {
+export async function createFacility(facilityData, imageFile) {
+    const formData = new FormData();
+    formData.append('image', imageFile); // Append the image file
+    Object.keys(facilityData).forEach(key => {
+        formData.append(key, facilityData[key]); // Append other facility data
+    });
+
     try {
-        const response = await axios.post(URL, facilityData);
+        const response = await axios.post(URL, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
         return response.status === 201 ? response.data : null;
     } catch (error) {
         console.error("Error creating facility:", error);
@@ -50,12 +59,12 @@ export async function updateFacility(id, facilityData) {
 }
 
 // Delete a facility
-export async function deleteFacility(id) {
+export const deleteFacility = async (facilityId) => {
     try {
-        const response = await axios.delete(`${URL}/${id}`);
-        return response.status === 200 ? response.data : null;
+        const response = await axios.delete(`${URL}/${facilityId}`);
+        return response.data;
     } catch (error) {
         console.error("Error deleting facility:", error);
         return null;
     }
-}
+};

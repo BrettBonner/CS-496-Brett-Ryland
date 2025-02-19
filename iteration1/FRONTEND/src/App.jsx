@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import { getFacilities } from "./api";
+import Admin from "./components/Admin/Admin";
 import Navbar from "./components/Navbar/Navbar";
 import Hero from "./components/Hero/Hero";
 import Facility from "./components/Facility/Facility";
@@ -36,6 +37,9 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
+        {/* Admin Page */}
+        <Route path="/admin" element={<Admin />} />
+
         {/* Home Page */}
         <Route path="/" element={<Hero fetchFacilities={fetchFacilities} />} />
 
