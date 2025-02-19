@@ -1,5 +1,3 @@
-## *STILL NEED TO INSTALL REACT-ROUTER-DOM AND CREATE ROUTES FOR PAGES
-
 ## Initial setup for Vite + React
 1. npm create vite@latest
 2. Framework: React
@@ -20,3 +18,13 @@
 1. cd iteration1
 2. cd BACKEND
 3. node server.js
+
+## Running tests
+1. cd iteration1
+2. cd FRONTEND
+3. npm run test
+
+## Running test coverages
+1. cd iteration1
+2. cd FRONTEND
+3. npm run test:coverage
