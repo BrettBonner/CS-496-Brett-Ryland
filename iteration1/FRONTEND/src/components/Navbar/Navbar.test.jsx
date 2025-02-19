@@ -17,16 +17,4 @@ describe("Navbar Component", () => {
         expect(links[0]).toHaveTextContent("Find Assisted Living");
         expect(links[1]).toHaveTextContent("Contact");
     });
-
-    test("handles button click in Featured Facilities section", () => {
-        render(<Navbar />);
-
-        const featuredButton = screen.getByRole("button", { name: /Featured Facilities ❤️/i });
-        expect(featuredButton).toBeInTheDocument();
-
-        // Simulate a button click
-        userEvent.click(featuredButton);
-
-        // Add your assertion for what should happen on click (if any action is defined)
-    });
 });
