@@ -83,3 +83,53 @@
     background-color: #45a049;
   }
   
+  .facility-card.selected {
+    border: 3px solid #007bff; /* Blue highlight */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+
+  .search-bar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px; /* Adds small gap between search bar and first card */
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    max-width: 300px; /* Smaller width */
+    padding: 5px;
+    border-radius: 20px;
+    background-color: white;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+  
+  .search-bar input {
+    width: 100%;
+    border: none;
+    padding: 6px;
+    border-radius: 20px;
+    outline: none;
+    font-size: 14px; /* Smaller text */
+  }
+  
+  .search-button {
+    border: none;
+    background: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 6px;
+  }
+  
+  .result-count {
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    margin-bottom: 5px;
+  }
+  
