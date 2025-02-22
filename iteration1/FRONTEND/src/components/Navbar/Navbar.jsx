@@ -1,22 +1,28 @@
 import React from "react";
-import "./Navbar.css"; // Make sure this path is correct
+import { Link } from "react-router-dom";
+import "./Navbar.css"; // Ensure this path is correct
 
 function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        {/* Left Side - Logo */}
+        {/* Left Side - Clickable Logo (Home Button) */}
         <div className="logo">
-          <img src="../src/assets/navbarlogo.jpg" alt="Assisted Living Direct" />
+          <Link to="/">
+            <img src="../src/assets/navbarlogo.jpg" alt="Assisted Living Direct" />
+          </Link>
         </div>
+
+        {/* Right Side - Navigation Links */}
         <div className="right-container">
-          <a href="#">Find Assisted Living</a>
-          <a href="#">Contact</a>
+          <Link to="/facilities">Find Assisted Living</Link>
+          <Link to="/contact">Contact</Link>
           <div className="Featured-Facil">
-            <button className="featured-btn">Featured Facilities ❤️</button>
+            <Link to="/featured">
+              <button className="featured-btn">Featured Facilities ❤️</button>
+            </Link>
           </div>
         </div>
-        {/* Center - Links */}
       </div>
     </nav>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { getFacilities } from "./api";
 import Admin from "./components/Admin/Admin";
 import Navbar from "./components/Navbar/Navbar";
@@ -31,19 +31,13 @@ function App() {
       setLoading(false);
     }
   };
-  
 
   return (
     <Router>
-      <Navbar />
+      <Navbar /> {/* ✅ Navbar with clickable home logo */}
       <Routes>
-        {/* Admin Page */}
         <Route path="/admin" element={<Admin />} />
-
-        {/* Home Page */}
         <Route path="/" element={<Hero fetchFacilities={fetchFacilities} />} />
-
-        {/* New Facilities Page */}
         <Route path="/facilities" element={<FacilityPage facilities={facilities} />} />
       </Routes>
     </Router>
