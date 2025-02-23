@@ -22,6 +22,7 @@ async function initializeStorage() {
         // Ensure MongoDB connection before proceeding
         await connectToServer();
         const db = getDB();
+
         storage = new GridFsStorage({
             db: db,
             file: (req, file) => ({
@@ -29,54 +30,64 @@ async function initializeStorage() {
                 bucketName: "uploads",
             }),
         });
+
         console.log("GridFS storage initialized successfully");
     } catch (error) {
-        console.error("Failed to initialize GridFS storage:", error);
+        console.error("Failed to initialize GridFS storage:", error.message);
     }
 }
 
 // Initialize GridFS storage once the database is connected
+// THis is how images will be stored on MongoDB
 initializeStorage();
-
 const upload = multer({ storage });
 
 // Retrieving all facilities
 facilityRoutes.get("/facilities", async (request, response) => {
     try {
         const db = getDB();
+        // Information for all facilities set to array
         const data = await db.collection(dbcollection).find({}).toArray();
-        response.json(data.length > 0 ? data : { message: "No data found" });
+        
+        response.json(data);
     } catch (error) {
-        response.status(500).json({ error: error.message });
+        console.error("Error retrieving all facility information: ", error.message);
     }
 });
 
-// Retrieving specific facility
+// Retrieving specific facility by MongoDB ID
 facilityRoutes.get("/facilities/:id", async (request, response) => {
     try {
         const db = getDB();
         const facility = await db.collection(dbcollection).findOne({ _id: new ObjectId(request.params.id) });
-        facility ? response.json(facility) : response.status(404).json({ error: "Facility not found" });
+
+        response.json(facility);
     } catch (error) {
-        response.status(500).json({ error: "Invalid ID format" });
+        console.error("Error retrieving specific facility: ", error.message);
     }
 });
 
-// Create a new facility with image upload
+// Image upload for when a new facility is created
 facilityRoutes.post("/facilities", upload.single("image"), async (request, response) => {
     try {
         const db = getDB();
+        // HTTP request for facility
         console.log("Uploaded file:", request.file);
         
+        // Creating the facility data object and directly assigning URL of image
         const facilityData = {
             ...request.body,
-            imageUrl: request.file ? `/files/${request.file.id}` : null,
+            imageUrl: `/files/${request.file.id}`
         };
+
+        // Inserting the facility data into the database
         console.log("Facility data:", facilityData);
-        const result = await db.collection(dbcollection).insertOne(facilityData);
-        response.status(201).json(result);
+        const insertedFacility = await db.collection(dbcollection).insertOne(facilityData);
+
+        // Successful HTTP response
+        response.status(201).json(insertedFacility);
     } catch (error) {
-        response.status(500).json({ error: error.message });
+        console.error("Error creating facility and uploading image: ", error.message);
     }
 });
 
@@ -84,28 +95,31 @@ facilityRoutes.post("/facilities", upload.single("image"), async (request, respo
 facilityRoutes.put("/facilities/:id", async (request, response) => {
     try {
         const db = getDB();
-        const result = await db.collection(dbcollection).updateOne(
+
+        // Attempting to update the facility document matching the ID from MongoDB
+        const insertedFacility = await db.collection(dbcollection).updateOne(
+            // Finding facility with matching ID from MongoDB
             { _id: new ObjectId(request.params.id) },
+            // Updating fields with new data from request body
             { $set: request.body }
         );
-        result.matchedCount > 0
-            ? response.json({ message: "Facility updated successfully" })
-            : response.status(404).json({ error: "Facility not found" });
+
+        response.json(insertedFacility);
     } catch (error) {
-        response.status(500).json({ error: "Invalid ID format" });
+        console.error("Error updating facility: ", error.message);
     }
 });
 
-// Deleting a facility by id
+// Deleting a facility by ID
 facilityRoutes.delete("/facilities/:id", async (request, response) => {
     try {
         const db = getDB();
-        const result = await db.collection(dbcollection).deleteOne({ _id: new ObjectId(request.params.id) });
-        result.deletedCount > 0
-            ? response.json({ message: "Facility deleted successfully" })
-            : response.status(404).json({ error: "Facility not found" });
+        // Attempting to delete the facility document matching the ID from MongoDB
+        const insertedFacility = await db.collection(dbcollection).deleteOne({ _id: new ObjectId(request.params.id) });
+
+        response.json(insertedFacility);
     } catch (error) {
-        response.status(500).json({ error: "Invalid ID format" });
+        console.error("Error deleting facility: ", error.message);
     }
 });
 

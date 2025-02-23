@@ -28,10 +28,13 @@ export async function getFacilityById(id) {
 
 // Create a new facility
 export async function createFacility(facilityData, imageFile) {
+    // Append the image file
     const formData = new FormData();
-    formData.append('image', imageFile); // Append the image file
+    formData.append('image', imageFile);
+
     Object.keys(facilityData).forEach(key => {
-        formData.append(key, facilityData[key]); // Append other facility data
+        // Append other facility data
+        formData.append(key, facilityData[key]);
     });
 
     try {
