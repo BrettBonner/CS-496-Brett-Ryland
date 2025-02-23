@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import Facility from "../Facility/Facility";
 
-function FacilityPage({ facilities }) {
+function FacilitySearch({ facilities }) {
   useEffect(() => {
-    console.log("Facilities Data Received:", facilities); // ✅ Debugging
+    console.log("Facilities Data Received: ", facilities); // ✅ Debugging
   }, [facilities]);
 
   return (
@@ -14,4 +14,4 @@ function FacilityPage({ facilities }) {
   );
 }
 
-export default FacilityPage;
+export default FacilitySearch;

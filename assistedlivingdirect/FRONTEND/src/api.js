@@ -1,16 +1,18 @@
 import axios from "axios";
 
-const URL = "http://localhost:3000/facilities";
+// URL which connects to database in MongoDB
+const URL = "http://localhost:3000/ALD_database";
 
-// Frontend API functions for retrieving data from backend routes
+// Frontend API functions for retrieving data from backend routes via URL
 
 // Retrieve all facilities
 export async function getFacilities() {
     try {
         const response = await axios.get(URL);
-        return response.status === 200 ? response.data : null;
+        return response.data;
+
     } catch (error) {
-        console.error("Error fetching facilities:", error);
+        console.error("Error fetching facilities:", error.message);
         return null;
     }
 }
@@ -19,9 +21,10 @@ export async function getFacilities() {
 export async function getFacilityById(id) {
     try {
         const response = await axios.get(`${URL}/${id}`);
-        return response.status === 200 ? response.data : null;
+        return response.data;
+
     } catch (error) {
-        console.error("Error fetching facility:", error);
+        console.error("Error fetching facility:", error.message);
         return null;
     }
 }
@@ -43,9 +46,10 @@ export async function createFacility(facilityData, imageFile) {
                 'Content-Type': 'multipart/form-data'
             }
         });
-        return response.status === 201 ? response.data : null;
+        return response.data;
+
     } catch (error) {
-        console.error("Error creating facility:", error);
+        console.error("Error creating facility:", error.message);
         return null;
     }
 }
@@ -54,20 +58,22 @@ export async function createFacility(facilityData, imageFile) {
 export async function updateFacility(id, facilityData) {
     try {
         const response = await axios.put(`${URL}/${id}`, facilityData);
-        return response.status === 200 ? response.data : null;
+        return response.data;
+
     } catch (error) {
-        console.error("Error updating facility:", error);
+        console.error("Error updating facility:", error.message);
         return null;
     }
 }
 
 // Delete a facility
-export const deleteFacility = async (facilityId) => {
+export const deleteFacility = async (id) => {
     try {
-        const response = await axios.delete(`${URL}/${facilityId}`);
+        const response = await axios.delete(`${URL}/${id}`);
         return response.data;
+
     } catch (error) {
-        console.error("Error deleting facility:", error);
+        console.error("Error deleting facility:", error.message);
         return null;
     }
 };

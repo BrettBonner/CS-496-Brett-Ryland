@@ -5,8 +5,8 @@ const { connectToServer } = require('./mongo-connect');
 // Establishing Express library
 const express = require('express');
 const cors = require('cors');
-// Establishing facilities routing functionality
-const facilities = require("./routes/facilityroutes");
+// Establishing ALD_database routing functionality
+const ALD_database = require("./routes/facilityroutes");
 
 const app = express();
 const PORT = 3000;
@@ -15,19 +15,20 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use(facilities);
+app.use(ALD_database);
 
 // Tells local computer to listen to port 3000 for requests
 // Once connection is established, connects to port and MongoDB
 async function startServer() {
     try {
         await connectToServer();
-        app.use(facilities);
+        app.use(ALD_database);
 
         app.listen(PORT, () => {
             console.log(`Backend server is running on port:`);
             console.log(PORT);
         })
+        
     } catch (error) {
         console.error('Failed to connect to MongoDB:', error);
         process.exit(1);

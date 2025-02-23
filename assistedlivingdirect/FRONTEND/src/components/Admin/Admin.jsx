@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { getFacilities, getFacilityById, createFacility, updateFacility, deleteFacility } from '../../api';
+import React, { useState, useEffect } from "react";
+import { getFacilities, getFacilityById, createFacility, updateFacility, deleteFacility } from "../../api";
 import "./Admin.css";
 
 const Admin = () => {
@@ -7,23 +7,25 @@ const Admin = () => {
     const [facilities, setFacilities] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [view, setView] = useState('list'); // 'list', 'add', 'edit', 'view'
+    const [view, setView] = useState("list"); // "list", "add", "edit", "view"
     const [selectedFacility, setSelectedFacility] = useState(null);
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
-    const [searchTerm, setSearchTerm] = useState('');
+    const [searchTerm, setSearchTerm] = useState("");
+    
+    // Format for creating a new faciltiy
     const [formData, setFormData] = useState({
-        county: '',
-        Licensee: '',
-        'Street Address': '',
-        City: '',
-        'Zip Code': '',
-        'Name of Contact Person': '',
-        'Business Phone Number': '',
-        'Business Email': '',
-        'Number of Beds': '',
-        'Level of Care': 'Level 1',
-        'SALS certified': 'no'
+        county: "",
+        Licensee: "",
+        "Street Address": "",
+        City: "",
+        "Zip Code": "",
+        "Name of Contact Person": "",
+        "Business Phone Number": "",
+        "Business Email": "",
+        "Number of Beds": "",
+        "Level of Care": "Level 1",
+        "SALS certified": "no"
     });
     const [formErrors, setFormErrors] = useState({});
 
@@ -36,41 +38,38 @@ const Admin = () => {
     const loadFacilities = async () => {
         setLoading(true);
         try {
-        const data = await getFacilities();
-        if (data) {
+            const data = await getFacilities();
             setFacilities(data);
-            setError(null);
-        } else {
-            setError('Failed to load facilities');
-        }
-        } catch (err) {
-        setError('Error loading facilities: ' + err.message);
+
+        } catch (error) {
+            setError("Error loading facilities: " + error.message);
+
         } finally {
-        setLoading(false);
+            setLoading(false);
         }
     };
 
-    // Function to get the full image URL with base URL prepended
+    // Function to get the full image URL
     const getFullImageUrl = (facilityData) => {
         if (!facilityData?.imageUrl) return null;
-        return facilityData.imageUrl.startsWith('http')
+        return facilityData.imageUrl.startsWith("http")
         ? facilityData.imageUrl
         : `http://localhost:3000${facilityData.imageUrl}`;
     };
 
     // Handle form input changes
     const handleInputChange = (e) => {
-        const { name, value, type } = e.target;
+        const {name, value, type} = e.target;
         let processedValue = value;
         
         // Handle number inputs
-        if (type === 'number') {
-        processedValue = value === '' ? '' : parseInt(value, 10);
+        if (type === "number") {
+            processedValue = value === "" ? "" : parseInt(value, 10);
         }
         
         setFormData({
-        ...formData,
-        [name]: processedValue
+            ...formData,
+            [name]: processedValue
         });
         
         // Clear the error for this field if it exists
@@ -85,49 +84,51 @@ const Admin = () => {
     // Handle image file change
     const handleImageChange = (e) => {
         const file = e.target.files[0];
+
         if (file) {
-        setImageFile(file);
-        const reader = new FileReader();
-        reader.onloadend = () => setImagePreview(reader.result);
-        reader.readAsDataURL(file);
+            setImageFile(file);
+            const reader = new FileReader();
+            reader.onloadend = () => setImagePreview(reader.result);
+            reader.readAsDataURL(file);
+
         } else {
-        setImageFile(null);
-        setImagePreview(null);
+            setImageFile(null);
+            setImagePreview(null);
         }
     };
 
-    // Validate form before submission
+    // Validating all inputs for creating a new facility
     const validateForm = () => {
         const errors = {};
         
-        // Required fields
-        ['county', 'Licensee', 'Street Address', 'City', 'Zip Code', 
-        'Name of Contact Person', 'Business Phone Number', 'Number of Beds'].forEach(field => {
+        // Checking that each field input is filled out
+        ["county", "Licensee", "Street Address", "City", "Zip Code", 
+        "Name of Contact Person", "Business Phone Number", "Number of Beds"].forEach(field => {
         if (!formData[field]) {
             errors[field] = `${field} is required`;
         }
         });
         
         // Email validation
-        if (formData['Business Email'] && !/\S+@\S+\.\S+/.test(formData['Business Email'])) {
-        errors['Business Email'] = 'Please enter a valid email address';
+        if (formData["Business Email"] && !/\S+@\S+\.\S+/.test(formData["Business Email"])) {
+            errors["Business Email"] = "Please enter a valid email address";
         }
         
-        // Phone validation
-        if (formData['Business Phone Number'] && !/^\(\d{3}\) \d{3}-\d{4}$/.test(formData['Business Phone Number'])) {
-        errors['Business Phone Number'] = 'Phone should be in format (XXX) XXX-XXXX';
+        // Phone number validation
+        if (formData["Business Phone Number"] && !/^\(\d{3}\) \d{3}-\d{4}$/.test(formData["Business Phone Number"])) {
+            errors["Business Phone Number"] = "Phone should be in format (XXX) XXX-XXXX";
         }
         
         // Zip code validation
-        if (formData['Zip Code'] && (formData['Zip Code'] < 10000 || formData['Zip Code'] > 99999)) {
-        errors['Zip Code'] = 'Please enter a valid 5-digit zip code';
+        if (formData["Zip Code"] && (formData["Zip Code"] < 10000 || formData["Zip Code"] > 99999)) {
+            errors["Zip Code"] = "Please enter a valid 5-digit zip code";
         }
         
         setFormErrors(errors);
         return Object.keys(errors).length === 0;
     };
 
-    // Handle form submission
+    // Handle facility creation
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -137,91 +138,97 @@ const Admin = () => {
         
         setLoading(true);
         try {
-            if (view === 'add') {
+            if (view === "add") {
                 await createFacility(formData, imageFile); // Pass the image file
-            } else if (view === 'edit' && selectedFacility) {
+            } else if (view === "edit" && selectedFacility) {
                 await updateFacility(selectedFacility._id, formData, imageFile);
             }
             
-            // Reset form and return to list view
+            // Reset form and return to admin list-view
             resetForm();
             loadFacilities();
-            setView('list');
-        } catch (err) {
-            setError('Error saving facility: ' + err.message);
+            setView("list");
+
+        } catch (error) {
+            setError("Error saving facility: " + error.message);
         } finally {
             setLoading(false);
         }
     };
 
-    // Handle facility deletion
+    // Handle deleting a facility
     const handleDelete = async (facilityId) => {
-        if (!window.confirm('Are you sure you want to delete this facility? This action cannot be undone.')) {
-        return;
+        if (!window.confirm("Are you sure you want to delete this facility? This action cannot be undone.")) {
+            return;
         }
         
         setLoading(true);
         try {
-        await deleteFacility(facilityId);
-        loadFacilities();
-        } catch (err) {
-        setError('Error deleting facility: ' + err.message);
+            await deleteFacility(facilityId);
+            loadFacilities();
+
+        } catch (error) {
+            setError("Error deleting facility: " + error.message);
+
         } finally {
-        setLoading(false);
+            setLoading(false);
         }
     };
 
-    // Set up form for editing
+    // Handling editing an existing facility in the database
     const handleEdit = async (facilityId) => {
         setLoading(true);
         try {
-        const facility = await getFacilityById(facilityId);
-        if (facility) {
-            setSelectedFacility(facility);
-            setFormData({
-            county: facility.county || '',
-            Licensee: facility.Licensee || '',
-            'Street Address': facility['Street Address'] || '',
-            City: facility.City || '',
-            'Zip Code': facility['Zip Code'] || '',
-            'Name of Contact Person': facility['Name of Contact Person'] || '',
-            'Business Phone Number': facility['Business Phone Number'] || '',
-            'Business Email': facility['Business Email'] || '',
-            'Number of Beds': facility['Number of Beds'] || '',
-            'Level of Care': facility['Level of Care'] || 'Level 1',
-            'SALS certified': facility['SALS certified'] || 'no'
-            });
-            
-            if (facility.imageUrl) {
-            setImagePreview(getFullImageUrl(facility));
+            const facility = await getFacilityById(facilityId);
+            if (facility) {
+                setSelectedFacility(facility);
+                setFormData({
+                    county: facility.county || "",
+                    Licensee: facility.Licensee || "",
+                    "Street Address": facility["Street Address"] || "",
+                    City: facility.City || "",
+                    "Zip Code": facility["Zip Code"] || "",
+                    "Name of Contact Person": facility["Name of Contact Person"] || "",
+                    "Business Phone Number": facility["Business Phone Number"] || "",
+                    "Business Email": facility["Business Email"] || "",
+                    "Number of Beds": facility["Number of Beds"] || "",
+                    "Level of Care": facility["Level of Care"] || "Level 1",
+                    "SALS certified": facility["SALS certified"] || "no"
+                });
+                
+                if (facility.imageUrl) {
+                    setImagePreview(getFullImageUrl(facility));
+                }
+                
+                setView("edit");
+            } else {
+                setError("Facility not found");
             }
-            
-            setView('edit');
-        } else {
-            setError('Facility not found');
-        }
-        } catch (err) {
-        setError('Error loading facility: ' + err.message);
+
+        } catch (error) {
+            setError("Error loading facility: " + error.message);
+
         } finally {
-        setLoading(false);
+            setLoading(false);
         }
     };
 
     // Reset form to default state
     const resetForm = () => {
         setFormData({
-        county: '',
-        Licensee: '',
-        'Street Address': '',
-        City: '',
-        'Zip Code': '',
-        'Name of Contact Person': '',
-        'Business Phone Number': '',
-        'Business Email': '',
-        'Number of Beds': '',
-        'Level of Care': 'Level 1',
-        'SALS certified': 'no'
+            county: "",
+            Licensee: "",
+            "Street Address": "",
+            City: "",
+            "Zip Code": "",
+            "Name of Contact Person": "",
+            "Business Phone Number": "",
+            "Business Email": "",
+            "Number of Beds": "",
+            "Level of Care": "Level 1",
+            "SALS certified": "no"
         });
+        
         setImageFile(null);
         setImagePreview(null);
         setFormErrors({});
@@ -236,7 +243,7 @@ const Admin = () => {
     );
 
     // Render loading state
-    if (loading && view === 'list') {
+    if (loading && view === "list") {
         return <div className="admin-loading">Loading facilities...</div>;
     }
 
@@ -249,11 +256,11 @@ const Admin = () => {
         
         {/* View controls */}
         <div className="admin-controls">
-            {view === 'list' ? (
+            {view === "list" ? (
             <button 
                 onClick={() => {
                 resetForm();
-                setView('add');
+                setView("add");
                 }}
                 className="btn-add"
             >
@@ -263,7 +270,7 @@ const Admin = () => {
             <button 
                 onClick={() => {
                 resetForm();
-                setView('list');
+                setView("list");
                 }}
                 className="btn-back"
             >
@@ -273,7 +280,7 @@ const Admin = () => {
         </div>
         
         {/* Facility List View */}
-        {view === 'list' && (
+        {view === "list" && (
             <div className="facility-list-container">
             <div className="search-container">
                 <input
@@ -300,7 +307,7 @@ const Admin = () => {
                 {filteredFacilities.length === 0 ? (
                     <tr>
                     <td colSpan="6" className="no-facilities">
-                        No facilities found. {searchTerm && 'Try adjusting your search terms.'}
+                        No facilities found. {searchTerm && "Try adjusting your search terms."}
                     </td>
                     </tr>
                 ) : (
@@ -314,7 +321,7 @@ const Admin = () => {
                             className="facility-thumbnail"
                             onError={(e) => {
                                 e.target.onerror = null;
-                                e.target.src = '/placeholder-image.png';
+                                e.target.src = "/placeholder-image.png";
                             }}
                             />
                         ) : (
@@ -324,7 +331,7 @@ const Admin = () => {
                         <td>{facility.Licensee}</td>
                         <td>{facility.county}</td>
                         <td>{facility.City}</td>
-                        <td>{facility['Number of Beds']}</td>
+                        <td>{facility["Number of Beds"]}</td>
                         <td className="actions-cell">
                         <button
                             onClick={() => handleEdit(facility._id)}
@@ -348,9 +355,9 @@ const Admin = () => {
         )}
         
         {/* Add/Edit Facility Form */}
-        {(view === 'add' || view === 'edit') && (
+        {(view === "add" || view === "edit") && (
             <div className="facility-form-container">
-            <h2>{view === 'add' ? 'Add New Facility' : 'Edit Facility'}</h2>
+            <h2>{view === "add" ? "Add New Facility" : "Edit Facility"}</h2>
             
             <form onSubmit={handleSubmit} className="facility-form">
                 <div className="form-row">
@@ -362,7 +369,7 @@ const Admin = () => {
                     name="Licensee"
                     value={formData.Licensee}
                     onChange={handleInputChange}
-                    className={formErrors.Licensee ? 'error' : ''}
+                    className={formErrors.Licensee ? "error" : ""}
                     />
                     {formErrors.Licensee && <span className="error-message">{formErrors.Licensee}</span>}
                 </div>
@@ -375,7 +382,7 @@ const Admin = () => {
                     name="county"
                     value={formData.county}
                     onChange={handleInputChange}
-                    className={formErrors.county ? 'error' : ''}
+                    className={formErrors.county ? "error" : ""}
                     />
                     {formErrors.county && <span className="error-message">{formErrors.county}</span>}
                 </div>
@@ -388,11 +395,11 @@ const Admin = () => {
                     type="text"
                     id="Street Address"
                     name="Street Address"
-                    value={formData['Street Address']}
+                    value={formData["Street Address"]}
                     onChange={handleInputChange}
-                    className={formErrors['Street Address'] ? 'error' : ''}
+                    className={formErrors["Street Address"] ? "error" : ""}
                     />
-                    {formErrors['Street Address'] && <span className="error-message">{formErrors['Street Address']}</span>}
+                    {formErrors["Street Address"] && <span className="error-message">{formErrors["Street Address"]}</span>}
                 </div>
                 
                 <div className="form-group">
@@ -403,7 +410,7 @@ const Admin = () => {
                     name="City"
                     value={formData.City}
                     onChange={handleInputChange}
-                    className={formErrors.City ? 'error' : ''}
+                    className={formErrors.City ? "error" : ""}
                     />
                     {formErrors.City && <span className="error-message">{formErrors.City}</span>}
                 </div>
@@ -414,11 +421,11 @@ const Admin = () => {
                     type="number"
                     id="Zip Code"
                     name="Zip Code"
-                    value={formData['Zip Code']}
+                    value={formData["Zip Code"]}
                     onChange={handleInputChange}
-                    className={formErrors['Zip Code'] ? 'error' : ''}
+                    className={formErrors["Zip Code"] ? "error" : ""}
                     />
-                    {formErrors['Zip Code'] && <span className="error-message">{formErrors['Zip Code']}</span>}
+                    {formErrors["Zip Code"] && <span className="error-message">{formErrors["Zip Code"]}</span>}
                 </div>
                 </div>
                 
@@ -429,11 +436,11 @@ const Admin = () => {
                     type="text"
                     id="Name of Contact Person"
                     name="Name of Contact Person"
-                    value={formData['Name of Contact Person']}
+                    value={formData["Name of Contact Person"]}
                     onChange={handleInputChange}
-                    className={formErrors['Name of Contact Person'] ? 'error' : ''}
+                    className={formErrors["Name of Contact Person"] ? "error" : ""}
                     />
-                    {formErrors['Name of Contact Person'] && <span className="error-message">{formErrors['Name of Contact Person']}</span>}
+                    {formErrors["Name of Contact Person"] && <span className="error-message">{formErrors["Name of Contact Person"]}</span>}
                 </div>
                 
                 <div className="form-group">
@@ -443,11 +450,11 @@ const Admin = () => {
                     id="Business Phone Number"
                     name="Business Phone Number"
                     placeholder="(XXX) XXX-XXXX"
-                    value={formData['Business Phone Number']}
+                    value={formData["Business Phone Number"]}
                     onChange={handleInputChange}
-                    className={formErrors['Business Phone Number'] ? 'error' : ''}
+                    className={formErrors["Business Phone Number"] ? "error" : ""}
                     />
-                    {formErrors['Business Phone Number'] && <span className="error-message">{formErrors['Business Phone Number']}</span>}
+                    {formErrors["Business Phone Number"] && <span className="error-message">{formErrors["Business Phone Number"]}</span>}
                 </div>
                 
                 <div className="form-group">
@@ -456,11 +463,11 @@ const Admin = () => {
                     type="email"
                     id="Business Email"
                     name="Business Email"
-                    value={formData['Business Email']}
+                    value={formData["Business Email"]}
                     onChange={handleInputChange}
-                    className={formErrors['Business Email'] ? 'error' : ''}
+                    className={formErrors["Business Email"] ? "error" : ""}
                     />
-                    {formErrors['Business Email'] && <span className="error-message">{formErrors['Business Email']}</span>}
+                    {formErrors["Business Email"] && <span className="error-message">{formErrors["Business Email"]}</span>}
                 </div>
                 </div>
                 
@@ -471,11 +478,11 @@ const Admin = () => {
                     type="number"
                     id="Number of Beds"
                     name="Number of Beds"
-                    value={formData['Number of Beds']}
+                    value={formData["Number of Beds"]}
                     onChange={handleInputChange}
-                    className={formErrors['Number of Beds'] ? 'error' : ''}
+                    className={formErrors["Number of Beds"] ? "error" : ""}
                     />
-                    {formErrors['Number of Beds'] && <span className="error-message">{formErrors['Number of Beds']}</span>}
+                    {formErrors["Number of Beds"] && <span className="error-message">{formErrors["Number of Beds"]}</span>}
                 </div>
                 
                 <div className="form-group">
@@ -483,7 +490,7 @@ const Admin = () => {
                     <select
                     id="Level of Care"
                     name="Level of Care"
-                    value={formData['Level of Care']}
+                    value={formData["Level of Care"]}
                     onChange={handleInputChange}
                     >
                     <option value="Level 1">Level 1</option>
@@ -497,7 +504,7 @@ const Admin = () => {
                     <select
                     id="SALS certified"
                     name="SALS certified"
-                    value={formData['SALS certified']}
+                    value={formData["SALS certified"]}
                     onChange={handleInputChange}
                     >
                     <option value="yes">Yes</option>
@@ -544,7 +551,7 @@ const Admin = () => {
                     type="button"
                     onClick={() => {
                     resetForm();
-                    setView('list');
+                    setView("list");
                     }}
                     className="btn-cancel"
                 >
@@ -555,7 +562,7 @@ const Admin = () => {
                     className="btn-save"
                     disabled={loading}
                 >
-                    {loading ? 'Saving...' : view === 'add' ? 'Create Facility' : 'Update Facility'}
+                    {loading ? "Saving..." : view === "add" ? "Create Facility" : "Update Facility"}
                 </button>
                 </div>
             </form>

@@ -1,14 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "./Hero.css"; 
+import "./Home.css"; 
 
-function Hero({ fetchFacilities }) {
+function Home({ fetchFacilities }) {
   const navigate = useNavigate(); // ✅ Enables navigation
 
   return (
-    <section className="hero-container">
-      <div className="hero-content">
-        <img src="../src/assets/MainLogo.jpeg" alt="Main Logo" className="hero-logo" />
+    <section className="Home-container">
+      <div className="Home-content">
+        <img src="../src/assets/MainLogo.jpeg" alt="Main Logo" className="Home-logo" />
         <h2>Find The Perfect Home For Your Loved Ones</h2>
         <h1>Discover All Assisted Living in Maryland</h1>
 
@@ -18,7 +18,7 @@ function Hero({ fetchFacilities }) {
           onClick={async () => {
             console.log("Find Your Facilities button clicked!");
             await fetchFacilities(); // Fetch data first
-            navigate("/facilities"); // Navigate to new page
+            navigate("/facilitysearch"); // Navigate to new page
           }}
         >
           Find Your Facilities
@@ -28,4 +28,4 @@ function Hero({ fetchFacilities }) {
   );
 }
 
-export default Hero;
+export default Home;

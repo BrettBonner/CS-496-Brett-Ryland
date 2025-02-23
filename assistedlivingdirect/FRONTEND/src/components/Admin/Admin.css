@@ -1,0 +1,125 @@
+.admin-facility-manager {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: inherit;
+  color: var(--white);
+}
+
+.admin-facility-manager h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--white);
+  border-bottom: 2px solid var(--periwinkle);
+  padding-bottom: 12px;
+}
+
+.admin-error {
+  background-color: var(--red);
+  color: var(--white);
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.admin-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 1.5rem;
+  color: var(--periwinkle);
+}
+
+.admin-controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.btn-add, .btn-back {
+  background-color: var(--magenta);
+  color: var(--white);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.25s;
+}
+
+.btn-back {
+  background-color: var(--periwinkle);
+}
+
+.btn-add:hover {
+  background-color: var(--white);
+}
+
+.btn-back:hover {
+  background-color: var(--white);
+}
+
+.search-container {
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 16px;
+  border: 1px solid var(--periwinkle);
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: var(--background);
+  color: var(--white);
+}
+
+.facility-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.facility-table th {
+  background-color: var(--dark-blue);
+  color: var(--magenta);
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 600;
+  border-bottom: 2px solid var(--periwinkle);
+}
+
+.facility-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--periwinkle);
+  vertical-align: middle;
+}
+
+.facility-table tr:hover {
+  background-color: var(--periwinkle);
+}
+
+.btn-edit, .btn-delete {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.25s;
+}
+
+.btn-edit {
+  background-color: var(--gold);
+  color: var(--dark-blue);
+}
+
+.btn-delete {
+  background-color: var(--red);
+  color: var(--dark-blue);
+}
+
+.btn-edit:hover, .btn-delete:hover {
+  background-color: var(--white);
+}

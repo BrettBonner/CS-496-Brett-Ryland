@@ -32,6 +32,7 @@ async function initializeStorage() {
         });
 
         console.log("GridFS storage initialized successfully");
+
     } catch (error) {
         console.error("Failed to initialize GridFS storage:", error.message);
     }
@@ -42,33 +43,35 @@ async function initializeStorage() {
 initializeStorage();
 const upload = multer({ storage });
 
-// Retrieving all facilities
-facilityRoutes.get("/facilities", async (request, response) => {
+// Retrieving all ALD_database
+facilityRoutes.get("/ALD_database", async (request, response) => {
     try {
         const db = getDB();
-        // Information for all facilities set to array
+        // Information for all ALD_database set to array
         const data = await db.collection(dbcollection).find({}).toArray();
         
         response.json(data);
+
     } catch (error) {
         console.error("Error retrieving all facility information: ", error.message);
     }
 });
 
 // Retrieving specific facility by MongoDB ID
-facilityRoutes.get("/facilities/:id", async (request, response) => {
+facilityRoutes.get("/ALD_database/:id", async (request, response) => {
     try {
         const db = getDB();
         const facility = await db.collection(dbcollection).findOne({ _id: new ObjectId(request.params.id) });
 
         response.json(facility);
+
     } catch (error) {
         console.error("Error retrieving specific facility: ", error.message);
     }
 });
 
 // Image upload for when a new facility is created
-facilityRoutes.post("/facilities", upload.single("image"), async (request, response) => {
+facilityRoutes.post("/ALD_database", upload.single("image"), async (request, response) => {
     try {
         const db = getDB();
         // HTTP request for facility
@@ -86,13 +89,14 @@ facilityRoutes.post("/facilities", upload.single("image"), async (request, respo
 
         // Successful HTTP response
         response.status(201).json(insertedFacility);
+
     } catch (error) {
         console.error("Error creating facility and uploading image: ", error.message);
     }
 });
 
 // Updating facility information
-facilityRoutes.put("/facilities/:id", async (request, response) => {
+facilityRoutes.put("/ALD_database/:id", async (request, response) => {
     try {
         const db = getDB();
 
@@ -105,19 +109,21 @@ facilityRoutes.put("/facilities/:id", async (request, response) => {
         );
 
         response.json(insertedFacility);
+
     } catch (error) {
         console.error("Error updating facility: ", error.message);
     }
 });
 
 // Deleting a facility by ID
-facilityRoutes.delete("/facilities/:id", async (request, response) => {
+facilityRoutes.delete("/ALD_database/:id", async (request, response) => {
     try {
         const db = getDB();
         // Attempting to delete the facility document matching the ID from MongoDB
         const insertedFacility = await db.collection(dbcollection).deleteOne({ _id: new ObjectId(request.params.id) });
 
         response.json(insertedFacility);
+        
     } catch (error) {
         console.error("Error deleting facility: ", error.message);
     }
