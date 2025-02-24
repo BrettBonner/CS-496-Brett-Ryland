@@ -1,9 +1,7 @@
 const express = require("express");
 const facilityRoutes = express.Router();
-const multer = require("multer");
 const { ObjectId } = require("mongodb");
-const { GridFsStorage } = require("multer-gridfs-storage");
-const { getDB, connectToServer } = require("../mongo-connect");
+const { getDB } = require("../mongo-connect");
 
 // Collection name from database cluster
 const dbcollection = "Facility Info V2"
@@ -70,28 +68,42 @@ facilityRoutes.get("/ALD_database/:id", async (request, response) => {
     }
 });
 
-// Image upload for when a new facility is created
-facilityRoutes.post("/ALD_database", upload.single("image"), async (request, response) => {
+// Route to retrieve image by ID
+facilityRoutes.get("/files/:id", async (req, res) => {
+    try {
+        const fileId = new ObjectId(req.params.id);
+        const file = await gfs.files.findOne({ _id: fileId });
+
+        if (!file) {
+            return res.status(404).json({ error: "File not found" });
+        }
+
+        // Stream the file back to the client
+        const readStream = gfs.createReadStream({ _id: fileId });
+        readStream.pipe(res);
+    } catch (error) {
+        console.error("Error fetching image:", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+// Create new facility with base64 image
+facilityRoutes.post("/ALD_database", async (request, response) => {
     try {
         const db = getDB();
-        // HTTP request for facility
-        console.log("Uploaded file:", request.file);
         
-        // Creating the facility data object and directly assigning URL of image
+        // The image is now part of the request body as a base64 string
         const facilityData = {
             ...request.body,
-            imageUrl: `/files/${request.file.id}`
+            imageUrl: request.body.image // Store base64 string directly
         };
 
-        // Inserting the facility data into the database
-        console.log("Facility data:", facilityData);
         const insertedFacility = await db.collection(dbcollection).insertOne(facilityData);
-
-        // Successful HTTP response
         response.status(201).json(insertedFacility);
 
     } catch (error) {
-        console.error("Error creating facility and uploading image: ", error.message);
+        console.error("Error creating facility: ", error.message);
+        response.status(500).json({ error: "Failed to create facility" });
     }
 });
 
@@ -99,19 +111,18 @@ facilityRoutes.post("/ALD_database", upload.single("image"), async (request, res
 facilityRoutes.put("/ALD_database/:id", async (request, response) => {
     try {
         const db = getDB();
-
-        // Attempting to update the facility document matching the ID from MongoDB
+        const updateData = { ...request.body };
+        
         const insertedFacility = await db.collection(dbcollection).updateOne(
-            // Finding facility with matching ID from MongoDB
             { _id: new ObjectId(request.params.id) },
-            // Updating fields with new data from request body
-            { $set: request.body }
+            { $set: updateData }
         );
 
         response.json(insertedFacility);
 
     } catch (error) {
         console.error("Error updating facility: ", error.message);
+        response.status(500).json({ error: "Failed to update facility" });
     }
 });
 

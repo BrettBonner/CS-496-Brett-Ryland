@@ -30,39 +30,36 @@ export async function getFacilityById(id) {
 }
 
 // Create a new facility
-export async function createFacility(facilityData, imageFile) {
-    // Append the image file
-    const formData = new FormData();
-    formData.append('image', imageFile);
-
-    Object.keys(facilityData).forEach(key => {
-        // Append other facility data
-        formData.append(key, facilityData[key]);
-    });
-
+export async function createFacility(facilityData, imageBase64) {
     try {
-        const response = await axios.post(URL, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
+        const response = await axios.post(URL, {
+            ...facilityData,
+            image: imageBase64 // Send base64 string directly
         });
         return response.data;
 
     } catch (error) {
         console.error("Error creating facility:", error.message);
-        return null;
+        throw error;
     }
 }
 
-// Update facility information
-export async function updateFacility(id, facilityData) {
+// Update facility with base64 image
+export async function updateFacility(id, facilityData, imageBase64) {
     try {
-        const response = await axios.put(`${URL}/${id}`, facilityData);
+        const updateData = {
+            ...facilityData
+        };
+        if (imageBase64) {
+            updateData.image = imageBase64;
+        }
+
+        const response = await axios.put(`${URL}/${id}`, updateData);
         return response.data;
 
     } catch (error) {
         console.error("Error updating facility:", error.message);
-        return null;
+        throw error;
     }
 }
 
