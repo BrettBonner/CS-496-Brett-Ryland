@@ -103,19 +103,29 @@ function Facility({ facilities }) {
               }
             }}
           >
+            <div className="facility-logo">
+              <img src="/assets/navbarlogo.jpg" alt="Assisted Living Direct" className="facility-logo-img" />
+            </div>
             <h3>{facility.Licensee || "No Name"}</h3>
             <p>
-              <strong>Address:</strong> {facility["Street Address"] || "No Address"}
+              <strong>Address:</strong> {facility["Street Address"] || "No Address"}, {facility.City || "Unknown"}, {facility.county || "Unknown"} {facility["Zip Code"] || "No Zip Code"}, United States
             </p>
             <p>
-              <strong>City:</strong> {facility.City || "Unknown"}
+              <strong>Jurisdiction:</strong> {facility.county || "Unknown"}
             </p>
-            <p>
-              <strong>County:</strong> {facility.county || "Unknown"}
-            </p>
-            <p>
-              <strong>Zip Code:</strong> {facility["Zip Code"] || "No Zip Code"}
-            </p>
+            {/* Display Total Beds */}
+            {facility["Number of Beds"] && (
+              <p className="facility-details">
+                <span className="beds-icon">🛏</span> {facility["Number of Beds"]} Total Beds
+              </p>
+            )}
+            {/* Display Medicaid or SALS badge based on MongoDB variables */}
+            {facility["Medicaid Certified"] === "yes" && (
+              <div className="medicaid-certified">Medicaid Certified</div>
+            )}
+            {facility["SALS certified"] === "yes" && (
+              <div className="sals-certified">SALS Certified</div>
+            )}
             <div className="facility-actions">
               <button className="action-button email">Email</button>
               <button className="action-button call">Call</button>
