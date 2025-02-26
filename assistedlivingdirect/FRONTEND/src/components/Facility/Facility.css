@@ -1,135 +1,225 @@
 /* Main container */
 .facilities-container {
-    text-align: center;
-    margin: 20px;
-  }
-  
-  /* Button Styling */
-  .cta-button {
-    background-color: #007bff;
-    color: white;
-    font-size: 1.2rem;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  
-  .cta-button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Loading & Error Messages */
-  .loading, .error {
-    font-size: 1.1rem;
-    margin-top: 10px;
-    color: red;
-  }
-  
-  /* No Data Message */
-  .no-data {
-    font-size: 1rem;
-    color: gray;
-    margin-top: 10px;
-  }
-  
-  /* Facilities Grid */
-  .facilities-container {
-    display: flex; /* Enables side-by-side layout */
-    flex-direction: row; /* Aligns items horizontally */
-    height: 100vh;
+  text-align: center;
+  margin: 20px;
+  background-color: #ffffff; /* White background for the entire container to match navbar */
+}
+
+/* Button Styling */
+.cta-button {
+  background-color: #8e44ad; /* Purple to match navbar theme */
+  color: white;
+  font-size: 1.2rem;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #7d3c9d; /* Darker purple on hover */
+}
+
+/* Loading & Error Messages */
+.loading,
+.error {
+  font-size: 1.1rem;
+  margin-top: 10px;
+  color: red;
+}
+
+/* No Data Message */
+.no-data {
+  font-size: 1rem;
+  color: gray;
+  margin-top: 10px;
+}
+
+/* Facilities Grid */
+.facilities-container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
 }
 
 .facilities-list {
-    width: 30%; /* Adjust width to match the left-side display */
-    max-height: 100vh; /* Makes it scrollable */
-    overflow-y: auto; /* Enables scrolling */
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  width: 30%;
+  max-height: 100vh;
+  overflow-y: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: #ffffff; /* White background for the list area to match navbar and remove black */
 }
 
 .facility-card {
-    display: flex;
-    flex-direction: column; /* Stacks elements inside */
-    background-color: white;
-    padding: 5px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    color: black; /* Ensures text is visible */
-    font-size: 16px; /* Ensures text isn't too small */
-    min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff; /* White background for cards */
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #333;
+  font-size: 16px;
+  min-width: 250px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.facility-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.facility-card.selected {
+  border: 3px solid #8e44ad; /* Purple border for selected state, matching navbar */
+  box-shadow: 0 6px 12px rgba(142, 68, 173, 0.3);
+  background-color: #f8f9fa; /* Very light gray for subtle distinction */
+  transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.facility-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.facility-card p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #666;
+  text-align: left;
+}
+
+.facility-card strong {
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+/* Facility Actions (Buttons) */
+.facility-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.action-button {
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.action-button:hover {
+  transform: translateY(-1px);
+}
+
+.action-button.email {
+  background-color: #3498db; /* Blue for Email, matches screenshot */
+  color: white;
+}
+
+.action-button.email:hover {
+  background-color: #2980b9;
+}
+
+.action-button.call {
+  background-color: #e74c3c; /* Red for Call, matches screenshot */
+  color: white;
+}
+
+.action-button.call:hover {
+  background-color: #c0392b;
+}
+
+.action-button.directions {
+  background-color: #2ecc71; /* Green for Directions, matches screenshot */
+  color: white;
+}
+
+.action-button.directions:hover {
+  background-color: #27ae60;
+}
+
+/* Map Container */
 .map-container {
-    width: 70%; /* Ensures map takes up remaining space */
-    height: 100vh;
+  width: 70%;
+  height: 100vh;
 }
 
-  
-  .load-more {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-  }
-  
-  .load-more:hover {
-    background-color: #45a049;
-  }
-  
-  .facility-card.selected {
-    border: 3px solid #007bff; /* Blue highlight */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  }
+/* Load More Button */
+.load-more {
+  background-color: #8e44ad; /* Purple to match navbar theme */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
 
-  .search-bar-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 10px; /* Adds small gap between search bar and first card */
-  }
-  
-  .search-bar {
-    display: flex;
-    align-items: center;
-    width: 90%;
-    max-width: 300px; /* Smaller width */
-    padding: 5px;
-    border-radius: 20px;
-    background-color: white;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  }
-  
-  .search-bar input {
-    width: 100%;
-    border: none;
-    padding: 6px;
-    border-radius: 20px;
-    outline: none;
-    font-size: 14px; /* Smaller text */
-  }
-  
-  .search-button {
-    border: none;
-    background: none;
-    font-size: 16px;
-    cursor: pointer;
-    padding: 6px;
-  }
-  
-  .result-count {
-    font-size: 12px;
-    font-weight: bold;
-    text-align: center;
-    color: white;
-    margin-bottom: 5px;
-  }
-  
+.load-more:hover {
+  background-color: #7d3c9d;
+}
+
+/* Search Bar Styling */
+.search-bar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 10px; /* Added margin to move the search bar down slightly */
+  margin-bottom: 10px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  width: 90%;
+  max-width: 300px;
+  padding: 10px;
+  border-radius: 25px;
+  background-color: #ffffff; /* White background */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Stronger shadow for distinction */
+  border: 2px solid #8e44ad; /* Purple border for contrast against white */
+}
+
+.search-bar input {
+  width: 100%;
+  border: none;
+  padding: 8px;
+  border-radius: 25px;
+  outline: none;
+  font-size: 14px;
+  color: #333;
+}
+
+.search-bar input::placeholder {
+  color: #8e44ad; /* Purple placeholder text for distinctiveness */
+}
+
+.search-button {
+  border: none;
+  background: none;
+  font-size: 18px; /* Slightly larger search icon */
+  cursor: pointer;
+  padding: 6px;
+  color: #8e44ad; /* Purple search icon for consistency */
+}
+
+/* Result Count */
+.result-count {
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  color: #666;
+  margin-bottom: 10px;
+}

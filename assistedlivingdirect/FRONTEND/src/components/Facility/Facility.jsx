@@ -22,7 +22,6 @@ function Facility({ facilities }) {
   const mapRef = useRef(null);
   const listRef = useRef(null);
 
-  // Memoize filtered facilities to prevent unnecessary recalculation
   const allFilteredFacilities = useMemo(() => {
     return facilities.filter(
       (facility) =>
@@ -36,7 +35,7 @@ function Facility({ facilities }) {
 
   useEffect(() => {
     async function fetchLatLng() {
-      const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || "mock-api-key";
+      const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || 'mock-api-key';
       let updatedLocations = {};
 
       for (const facility of visibleFacilities) {
@@ -51,6 +50,8 @@ function Facility({ facilities }) {
                 lat: response.data.results[0].geometry.location.lat,
                 lng: response.data.results[0].geometry.location.lng,
               };
+            } else {
+              console.warn(`No geocoding results for ${address}`);
             }
           } catch (error) {
             console.error("Error fetching coordinates:", error);
@@ -58,7 +59,6 @@ function Facility({ facilities }) {
         }
       }
 
-      // Only update state if there are new locations to avoid infinite loop
       if (Object.keys(updatedLocations).length > 0) {
         setFacilityLocations((prev) => ({ ...prev, ...updatedLocations }));
       }
@@ -104,10 +104,23 @@ function Facility({ facilities }) {
             }}
           >
             <h3>{facility.Licensee || "No Name"}</h3>
-            <p><strong>Address:</strong> {facility["Street Address"] || "No Address"}</p>
-            <p><strong>City:</strong> {facility.City || "Unknown"}</p>
-            <p><strong>County:</strong> {facility.county || "Unknown"}</p>
-            <p><strong>Zip Code:</strong> {facility["Zip Code"] || "No Zip Code"}</p>
+            <p>
+              <strong>Address:</strong> {facility["Street Address"] || "No Address"}
+            </p>
+            <p>
+              <strong>City:</strong> {facility.City || "Unknown"}
+            </p>
+            <p>
+              <strong>County:</strong> {facility.county || "Unknown"}
+            </p>
+            <p>
+              <strong>Zip Code:</strong> {facility["Zip Code"] || "No Zip Code"}
+            </p>
+            <div className="facility-actions">
+              <button className="action-button email">Email</button>
+              <button className="action-button call">Call</button>
+              <button className="action-button directions">Get Directions</button>
+            </div>
           </div>
         ))}
         {visibleCount < allFilteredFacilities.length && (
@@ -124,21 +137,23 @@ function Facility({ facilities }) {
             center={mapCenter}
             onLoad={(map) => (mapRef.current = map)}
           >
-            {Object.keys(facilityLocations).slice(0, 50).map((key, index) => {
-              const facility = visibleFacilities.find((f) => f.Licensee === key);
-              if (!facility) return null;
-              return (
-                <Marker
-                  key={index}
-                  position={facilityLocations[key]}
-                  onClick={() => {
-                    const facilityIndex = visibleFacilities.findIndex((f) => f.Licensee === key);
-                    setSelectedFacility(facilityIndex);
-                    setMapCenter(facilityLocations[key]);
-                  }}
-                />
-              );
-            })}
+            {Object.keys(facilityLocations)
+              .slice(0, 50)
+              .map((key, index) => {
+                const facility = visibleFacilities.find((f) => f.Licensee === key);
+                if (!facility) return null;
+                return (
+                  <Marker
+                    key={index}
+                    position={facilityLocations[key]}
+                    onClick={() => {
+                      const facilityIndex = visibleFacilities.findIndex((f) => f.Licensee === key);
+                      setSelectedFacility(facilityIndex);
+                      setMapCenter(facilityLocations[key]);
+                    }}
+                  />
+                );
+              })}
           </GoogleMap>
         </LoadScript>
       </div>
