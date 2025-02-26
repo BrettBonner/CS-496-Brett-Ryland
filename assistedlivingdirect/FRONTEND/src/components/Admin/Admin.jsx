@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { getFacilities, getFacilityById, createFacility, updateFacility, deleteFacility } from "../../api";
+import { getFacilities, getFacilityById, updateFacility, deleteFacility } from "../../api";
 import FacilityList from "./FacilityList/FacilityList";
-import CreateFacility from "./CreateFacility/CreateFacility";
+import FacilityHandler from "./FacilityHandler/FacilityHandler";
 import "./Admin.css";
 
 const Admin = () => {
@@ -53,10 +53,10 @@ const Admin = () => {
 
     // Function to get the full image URL
     const getFullImageUrl = (facilityData) => {
-        if (!facilityData?.imageUrl) return null;
-        return facilityData.imageUrl.startsWith("http")
-        ? facilityData.imageUrl
-        : `http://localhost:3000${facilityData.imageUrl}`;
+        if (!facilityData?.imageURL) return null;
+        return facilityData.imageURL.startsWith("http")
+        ? facilityData.imageURL
+        : `http://localhost:3000${facilityData.imageURL}`;
     };
 
     // Handle form input changes
@@ -140,12 +140,17 @@ const Admin = () => {
         
         setLoading(true);
         try {
-            if (view === "add") {
-                await createFacility(formData, imageFile); // imageFile now contains base64 string
-            } else if (view === "edit" && selectedFacility) {
-                await updateFacility(selectedFacility._id, formData, imageFile);
+            const updatedData = { ...formData };
+            if (imageFile === null) {
+                updatedData.imageURL = null; // Explicitly remove image
             }
-            
+    
+            if (view === "add") {
+                await FacilityHandler(updatedData, imageFile);
+            } else if (view === "edit" && selectedFacility) {
+                await updateFacility(selectedFacility._id, updatedData, imageFile);
+            }
+    
             resetForm();
             loadFacilities();
             setView("list");
@@ -156,7 +161,7 @@ const Admin = () => {
             setLoading(false);
         }
     };
-
+    
     // Handle deleting a facility
     const handleDelete = async (facilityId) => {
         if (!window.confirm("Are you sure you want to delete this facility? This action cannot be undone.")) {
@@ -197,7 +202,7 @@ const Admin = () => {
                     "SALS certified": facility["SALS certified"] || "no"
                 });
                 
-                if (facility.imageUrl) {
+                if (facility.imageURL) {
                     setImagePreview(getFullImageUrl(facility));
                 }
                 
@@ -283,7 +288,7 @@ const Admin = () => {
         )}
           
         {(view === "add" || view === "edit") && (
-            <CreateFacility
+            <FacilityHandler
                 formData={formData}
                 formErrors={formErrors}
                 handleInputChange={handleInputChange}

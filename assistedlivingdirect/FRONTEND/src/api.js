@@ -30,11 +30,11 @@ export async function getFacilityById(id) {
 }
 
 // Create a new facility
-export async function createFacility(facilityData, imageBase64) {
+export async function FacilityHandler(facilityData, imageBase64) {
     try {
         const response = await axios.post(URL, {
             ...facilityData,
-            image: imageBase64 // Send base64 string directly
+            imageURL: imageBase64 // Send base64 string directly
         });
         return response.data;
 
@@ -51,7 +51,7 @@ export async function updateFacility(id, facilityData, imageBase64) {
             ...facilityData
         };
         if (imageBase64) {
-            updateData.image = imageBase64;
+            updateData.imageURL = imageBase64;
         }
 
         const response = await axios.put(`${URL}/${id}`, updateData);

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CreateFacility = ({ 
+const FacilityHandler = ({ 
   formData, 
   formErrors, 
   handleInputChange, 
@@ -195,7 +195,7 @@ const CreateFacility = ({
             accept="image/*"
             onChange={handleImagePreview}
           />
-          <p className="file-hint">Recommended size: 800x600px, Max: 5MB, JPG or PNG</p>
+          <p className="file-hint">Recommended JPG Only</p>
           
           {imagePreview && (
             <div className="image-preview-container">
@@ -244,4 +244,4 @@ const CreateFacility = ({
   );
 };
 
-export default CreateFacility;
+export default FacilityHandler;

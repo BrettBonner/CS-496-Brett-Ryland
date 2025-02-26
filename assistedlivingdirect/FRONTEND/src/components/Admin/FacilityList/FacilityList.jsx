@@ -40,14 +40,14 @@ const FacilityList = ({ facilities, searchTerm, setSearchTerm, handleEdit, handl
               filteredFacilities.map(facility => (
                 <tr key={facility._id}>
                   <td className="facility-image-cell">
-                    {facility.imageUrl ? (
+                    {facility.imageURL ? (
                       <img
                         src={getFullImageUrl(facility)}
                         alt={facility.Licensee}
                         className="facility-thumbnail"
                         onError={(e) => {
                           e.target.onerror = null;
-                          e.target.src = "/placeholder-image.png";
+                          e.target.src = facility.imageURL;
                         }}
                       />
                     ) : (

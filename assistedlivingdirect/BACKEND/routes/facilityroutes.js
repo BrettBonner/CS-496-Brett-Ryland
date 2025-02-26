@@ -6,40 +6,10 @@ const { getDB } = require("../mongo-connect");
 // Collection name from database cluster
 const dbcollection = "Facility Info V2"
 
-// Ensure database connection before initializing storage
-let storage;
-
 // Frontend will send an http request for the backend 
 // and these are the routes for connecting the frontend 
 // to the backend. Each route corresponds to a different 
 // functionality for managing the database
-
-// Create storage engine for GridFS
-async function initializeStorage() {
-    try {
-        // Ensure MongoDB connection before proceeding
-        await connectToServer();
-        const db = getDB();
-
-        storage = new GridFsStorage({
-            db: db,
-            file: (req, file) => ({
-                filename: file.originalname,
-                bucketName: "uploads",
-            }),
-        });
-
-        console.log("GridFS storage initialized successfully");
-
-    } catch (error) {
-        console.error("Failed to initialize GridFS storage:", error.message);
-    }
-}
-
-// Initialize GridFS storage once the database is connected
-// THis is how images will be stored on MongoDB
-initializeStorage();
-const upload = multer({ storage });
 
 // Retrieving all ALD_database
 facilityRoutes.get("/ALD_database", async (request, response) => {
@@ -95,7 +65,7 @@ facilityRoutes.post("/ALD_database", async (request, response) => {
         // The image is now part of the request body as a base64 string
         const facilityData = {
             ...request.body,
-            imageUrl: request.body.image // Store base64 string directly
+            imageURL: request.body.image // Store base64 string directly
         };
 
         const insertedFacility = await db.collection(dbcollection).insertOne(facilityData);
