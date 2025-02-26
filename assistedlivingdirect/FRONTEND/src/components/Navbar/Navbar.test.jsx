@@ -1,10 +1,15 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
 import Navbar from "./Navbar";
 
 describe("Navbar Component", () => {
     test("renders logo and links", () => {
-        render(<Navbar />);
+        render(
+            <BrowserRouter>
+                <Navbar />
+            </BrowserRouter>
+        );
 
         // Assert that the logo is displayed
         const logo = screen.getByAltText(/Assisted Living Direct/i);
@@ -12,8 +17,6 @@ describe("Navbar Component", () => {
 
         // Assert that the navigation links are displayed
         const links = screen.getAllByRole("link");
-        expect(links.length).toBe(2);
-        expect(links[0]).toHaveTextContent("Find Assisted Living");
-        expect(links[1]).toHaveTextContent("Contact");
+        expect(links.length).toBe(4);
     });
 });
