@@ -5,33 +5,33 @@ import FacilityHandler from "./FacilityHandler/FacilityHandler";
 import "./Admin.css";
 
 const Admin = () => {
-  // States for facility management
-  const [facilities, setFacilities] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [view, setView] = useState("list");
-  const [selectedFacility, setSelectedFacility] = useState(null);
-  const [imageFile, setImageFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  
-  // Form state and validation logic remain in main component
-  const [formData, setFormData] = useState({
-    county: "",
-    Licensee: "",
-    "Street Address": "",
-    City: "",
-    "Zip Code": "",
-    "Name of Contact Person": "",
-    "Business Phone Number": "",
-    "Business Email": "",
-    "Number of Beds": "",
-    "Level of Care": "Level 1",
-    "SALS certified": "no"
-  });
-  const [formErrors, setFormErrors] = useState({});
+    // States for handling facilities
+    const [facilities, setFacilities] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [view, setView] = useState("list");
+    const [selectedFacility, setSelectedFacility] = useState(null);
+    const [imageFile, setImageFile] = useState(null);
+    const [imagePreview, setImagePreview] = useState(null);
+    const [searchTerm, setSearchTerm] = useState("");
+    
+    // Form state and validation logic
+    const [formData, setFormData] = useState({
+        county: "",
+        Licensee: "",
+        "Street Address": "",
+        City: "",
+        "Zip Code": "",
+        "Name of Contact Person": "",
+        "Business Phone Number": "",
+        "Business Email": "",
+        "Number of Beds": "",
+        "Level of Care": "Level 1",
+        "SALS certified": "no"
+    });
+    const [formErrors, setFormErrors] = useState({});
 
-    // Load facilities on component mount
+    // Load facilities on mounting from component
     useEffect(() => {
         loadFacilities();
     }, []);
@@ -51,7 +51,7 @@ const Admin = () => {
         }
     };
 
-    // Function to get the full image URL
+    // Function to get the full image URL from MongoDB
     const getFullImageUrl = (facilityData) => {
         if (!facilityData?.imageURL) return null;
         return facilityData.imageURL.startsWith("http")
@@ -59,7 +59,7 @@ const Admin = () => {
         : `http://localhost:3000${facilityData.imageURL}`;
     };
 
-    // Handle form input changes
+    // Handle changes to input form when creating a new facility
     const handleInputChange = (e) => {
         const {name, value, type} = e.target;
         let processedValue = value;
@@ -76,24 +76,28 @@ const Admin = () => {
         
         // Clear the error for this field if it exists
         if (formErrors[name]) {
-        setFormErrors({
-            ...formErrors,
-            [name]: null
-        });
+            setFormErrors({
+                ...formErrors,
+                [name]: null
+            });
         }
     };
 
     // Handle image file change
     const handleImageChange = (e) => {
+        // Gathers the target facility's information and saves it in file
         const file = e.target.files[0];
 
         if (file) {
             setImageFile(file);
             const reader = new FileReader();
             reader.onloadend = () => setImagePreview(reader.result);
+            
+            // Used to read the base64 in the URL and converting it
             reader.readAsDataURL(file);
 
         } else {
+            // No image has been made for the facility
             setImageFile(null);
             setImagePreview(null);
         }
@@ -130,7 +134,7 @@ const Admin = () => {
         return Object.keys(errors).length === 0;
     };
 
-    // Handle facility creation
+    // Handle form submission and creation of a new facility
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -142,7 +146,8 @@ const Admin = () => {
         try {
             const updatedData = { ...formData };
             if (imageFile === null) {
-                updatedData.imageURL = null; // Explicitly remove image
+                // Explicitly removes image by setting image URL in database to null
+                updatedData.imageURL = null;
             }
     
             if (view === "add") {
@@ -154,9 +159,10 @@ const Admin = () => {
             resetForm();
             loadFacilities();
             setView("list");
-    
+
         } catch (error) {
             setError("Error saving facility: " + error.message);
+
         } finally {
             setLoading(false);
         }
@@ -181,7 +187,7 @@ const Admin = () => {
         }
     };
 
-    // Handling editing an existing facility in the database
+    // Handling updating an existing facility in the database
     const handleEdit = async (facilityId) => {
         setLoading(true);
         try {
@@ -220,6 +226,7 @@ const Admin = () => {
     };
 
     // Reset form to default state
+    // Used when creating a new facility
     const resetForm = () => {
         setFormData({
             county: "",
