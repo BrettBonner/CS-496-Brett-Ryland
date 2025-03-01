@@ -30,7 +30,7 @@ export async function getFacilityById(id) {
 }
 
 // Create a new facility
-export async function FacilityHandler(facilityData, imageBase64) {
+export async function createFacility(facilityData, imageBase64) {
     try {
         const response = await axios.post(URL, {
             ...facilityData,

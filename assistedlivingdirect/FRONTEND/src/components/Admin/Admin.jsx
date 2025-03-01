@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getFacilities, getFacilityById, updateFacility, deleteFacility } from "../../api";
+import { getFacilities, getFacilityById, updateFacility, deleteFacility, createFacility } from "../../api";
 import FacilityList from "./FacilityList/FacilityList";
 import FacilityHandler from "./FacilityHandler/FacilityHandler";
 import "./Admin.css";
@@ -151,7 +151,7 @@ const Admin = () => {
             }
     
             if (view === "add") {
-                await FacilityHandler(updatedData, imageFile);
+                await createFacility(updatedData, imageFile);
             } else if (view === "edit" && selectedFacility) {
                 await updateFacility(selectedFacility._id, updatedData, imageFile);
             }
