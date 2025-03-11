@@ -3,21 +3,21 @@
   margin: 0 auto;
   padding: 20px;
   font-family: inherit;
-  color: var(--white);
+  color: var(--dark-blue);
 }
 
 .admin-facility-manager h1 {
   font-size: 2.5rem;
   font-weight: 700;
   line-height: 1.2;
-  color: var(--white);
+  color: var(--dark-blue);
   border-bottom: 2px solid var(--periwinkle);
   padding-bottom: 12px;
 }
 
 .admin-error {
   background-color: var(--red);
-  color: var(--white);
+  color: var(--dark-blue);
   padding: 12px 16px;
   border-radius: 6px;
   margin-bottom: 20px;
@@ -39,8 +39,8 @@
 }
 
 .btn-add, .btn-back {
-  background-color: var(--magenta);
-  color: var(--white);
+  background-color: rgb(255, 210, 248);
+  color: var(--magenta);
   border: none;
   padding: 10px 16px;
   border-radius: 8px;
@@ -49,16 +49,14 @@
   transition: background-color 0.25s;
 }
 
-.btn-back {
-  background-color: var(--periwinkle);
-}
-
 .btn-add:hover {
-  background-color: var(--white);
+  background-color: var(--magenta);
+  color: var(--dark-blue);
 }
 
 .btn-back:hover {
-  background-color: var(--white);
+  background-color: var(--magenta);
+  color: var(--dark-blue);
 }
 
 .search-container {
@@ -72,7 +70,7 @@
   border-radius: 8px;
   font-size: 1rem;
   background-color: var(--background);
-  color: var(--white);
+  color: var(--dark-blue);
 }
 
 .facility-table {

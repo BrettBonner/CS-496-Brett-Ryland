@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getFacilities, getFacilityById, updateFacility, deleteFacility, createFacility } from "../../api";
 import FacilityList from "./FacilityList/FacilityList";
 import FacilityHandler from "./FacilityHandler/FacilityHandler";
+import { Link } from "react-router-dom";
 import "./Admin.css";
 
 const Admin = () => {
@@ -255,6 +256,11 @@ const Admin = () => {
     
     return (
         <div className="admin-facility-manager">
+        <div className="logo">
+            <Link to="/">
+                <img src="../src/assets/navbarlogo.jpg" alt="Assisted Living Direct" />
+            </Link>
+        </div>
         <h1>Admin Facility Management</h1>
           
         {error && <div className="admin-error">{error}</div>}

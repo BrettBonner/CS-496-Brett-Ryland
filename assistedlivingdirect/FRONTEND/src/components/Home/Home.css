@@ -28,12 +28,14 @@
     font-size: 3rem;
     font-weight: bold;
     margin-bottom: 1rem;
+    color: var(--dark-blue);
   }
   
   .Home-content h2 {
     font-size: 1.5rem;
     font-weight: 300;
     margin-bottom: 1rem;
+    color: var(--dark-blue);
   }
   
   /* Call to Action Button */

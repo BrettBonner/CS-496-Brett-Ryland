@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
 import Facility from "./components/Facility/Facility";
 import FacilitySearch from "./components/FacilitySearch/FacilitySearch";
+import Login from "./components/Login/Login";
 
 function App() {
     const [facilities, setFacilities] = useState([]);
@@ -35,11 +36,21 @@ function App() {
     
     return (
         <Router>
-            <Navbar /> {/* ✅ Navbar with clickable home logo */}
             <Routes>
                 <Route path="/admin" element={<Admin />} />
-                <Route path="/" element={<Home fetchFacilities={fetchFacilities} />} />
-                <Route path="/facilitysearch" element={<FacilitySearch facilities={facilities} />} />
+                <Route path="/" element={
+                    <>
+                        <Navbar />
+                        <Home fetchFacilities={fetchFacilities} />
+                    </>
+                } />
+                <Route path="/facilitysearch" element={
+                    <>
+                        <Navbar />
+                        <FacilitySearch facilities={facilities} />
+                    </>
+                } />
+                <Route path="/Login" element={<Login />} />
             </Routes>
         </Router>
     );

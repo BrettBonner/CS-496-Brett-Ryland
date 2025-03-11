@@ -17,11 +17,13 @@ function Navbar() {
         <div className="right-container">
             <Link to="/facilitysearch">Find Assisted Living</Link>
             <Link to="/contact">Contact</Link>
+            <Link to="/login">Login</Link>
             <div className="Featured-Facil">
                 <Link to="/featured">
                     <button className="featured-btn">Featured Facilities ❤️</button>
                 </Link>
             </div>
+
         </div>
       </div>
     </nav>
