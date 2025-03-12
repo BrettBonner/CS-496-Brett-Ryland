@@ -25,12 +25,11 @@ async function startServer() {
     try {
         await connectToServer();
         app.use("/ALD_database", ALD_database);
-        console.log("Facility routes mounted at /ALD_database");
         app.use("/users", USER_database); // Mount userroutes at /users
-        console.log("User routes mounted at /users");
 
         app.listen(PORT, () => {
-            console.log(`Backend server is running on port: ${PORT}`);
+            console.log(`Backend server is running on port: `);
+            console.log(PORT);
         });
     } catch (error) {
         console.error('Failed to connect to MongoDB:', error);
