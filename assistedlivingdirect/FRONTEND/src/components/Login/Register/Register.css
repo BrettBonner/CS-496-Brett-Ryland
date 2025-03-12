@@ -1,4 +1,6 @@
-.login-container {
+/* register.css */
+
+.register-container {
     background-color: var(--background); /* White background */
     max-width: 400px;
     margin: 0 auto;
@@ -11,22 +13,13 @@
     justify-content: center;
 }
 
-.logo {
-    justify-content: center;
-}
-
-.logo img {
-    width: 100%; /* Adjust size as needed, matching Navbar */
-    height: auto;
-}
-
-.login-container h2 {
+.register-container h2 {
     color: var(--dark-blue); /* #080233 - Dark blue for heading */
     margin-bottom: 1.5rem;
     text-align: center;
 }
 
-.login-error {
+.register-error {
     color: var(--red); /* #D82323 - Red for error messages */
     background-color: rgba(216, 35, 35, 0.1); /* Light red background */
     padding: 0.5rem;
@@ -35,7 +28,7 @@
     text-align: center;
 }
 
-.login-form {
+.register-form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -67,7 +60,7 @@
     box-shadow: 0 0 4px var(--gold);
 }
 
-.btn-login {
+.btn-register {
     background-color: var(--magenta); /* #C62A8B - Magenta button */
     color: var(--dark-blue); /* #080233 - Dark blue text (not white) */
     padding: 0.75rem;
@@ -79,21 +72,21 @@
     transition: background-color 0.25s ease;
 }
 
-.btn-login:hover {
+.btn-register:hover {
     background-color: var(--orange); /* #FF5733 - Orange on hover */
 }
 
-.login-container p {
+.register-container p {
     color: var(--periwinkle); /* #736F91 - Periwinkle for paragraph text */
     text-align: center;
     margin-top: 1rem;
 }
 
-.login-container a {
+.register-container a {
     color: var(--gold); /* #FFB300 - Gold for link */
     text-decoration: none;
 }
 
-.login-container a:hover {
+.register-container a:hover {
     color: var(--orange); /* #FF5733 - Orange on hover */
 }

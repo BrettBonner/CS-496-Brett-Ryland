@@ -65,7 +65,7 @@ facilityRoutes.post("/ALD_database", async (request, response) => {
         // The image is now part of the request body as a base64 string
         const facilityData = {
             ...request.body,
-            imageURL: request.body.image // Store base64 string directly
+            imageURL: request.body.imageURL // Store base64 string directly
         };
 
         const insertedFacility = await db.collection(dbcollection).insertOne(facilityData);

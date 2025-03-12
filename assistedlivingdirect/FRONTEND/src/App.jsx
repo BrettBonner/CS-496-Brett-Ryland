@@ -7,6 +7,9 @@ import Home from "./components/Home/Home";
 import Facility from "./components/Facility/Facility";
 import FacilitySearch from "./components/FacilitySearch/FacilitySearch";
 import Login from "./components/Login/Login";
+import Register from "./components/Login/Register/Register";
+import Account from "./components/Account/Account";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
     const [facilities, setFacilities] = useState([]);
@@ -35,24 +38,28 @@ function App() {
     };
     
     return (
-        <Router>
-            <Routes>
-                <Route path="/admin" element={<Admin />} />
-                <Route path="/" element={
-                    <>
-                        <Navbar />
-                        <Home fetchFacilities={fetchFacilities} />
-                    </>
-                } />
-                <Route path="/facilitysearch" element={
-                    <>
-                        <Navbar />
-                        <FacilitySearch facilities={facilities} />
-                    </>
-                } />
-                <Route path="/Login" element={<Login />} />
-            </Routes>
-        </Router>
+        <AuthProvider>
+            <Router>
+                <Routes>
+                    <Route path="/admin" element={<Admin />} />
+                    <Route path="/" element={
+                        <>
+                            <Navbar />
+                            <Home fetchFacilities={fetchFacilities} />
+                        </>
+                    } />
+                    <Route path="/facilitysearch" element={
+                        <>
+                            <Navbar />
+                            <FacilitySearch facilities={facilities} />
+                        </>
+                    } />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/account" element={<Account />} />
+                </Routes>
+            </Router>
+        </AuthProvider>
     );
 }
 
