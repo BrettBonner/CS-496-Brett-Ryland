@@ -82,7 +82,6 @@ userroutes.put("/:username", async (request, response) => {
 
         const user = await db.collection(dbCollection).findOne({ username });
         if (!user) {
-            console.log("User not found:", username);
             return response.status(404).json({ error: "User not found" });
         }
 
@@ -163,7 +162,6 @@ userroutes.patch("/:username/password", async (request, response) => {
         // Check if user exists
         const user = await db.collection(dbCollection).findOne({ username });
         if (!user) {
-            console.log("User not found:", username);
             return response.status(404).json({ error: "User not found" });
         }
 
