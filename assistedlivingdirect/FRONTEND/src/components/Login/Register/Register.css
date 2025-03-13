@@ -1,0 +1,99 @@
+.form-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers children horizontally in a column layout */
+    gap: 1rem; /* Matches the gap used elsewhere in the form */
+}
+
+/* Ensure the button and link styles remain consistent */
+.btn-register {
+    background-color: var(--magenta); /* #C62A8B - Magenta button */
+    color: var(--dark-blue); /* #080233 - Dark blue text (not white) */
+    padding: 0.75rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+    width: 100%; /* Ensures it matches the input fields' width */
+    max-width: 200px; /* Optional: Limits width for a cleaner look */
+}
+
+.btn-register:hover {
+    background-color: var(--orange); /* #FF5733 - Orange on hover */
+}
+
+.back-to-login {
+    color: var(--gold); /* #FFB300 - Gold for link */
+    text-decoration: none;
+}
+
+.back-to-login:hover {
+    color: var(--orange); /* #FF5733 - Orange on hover */
+}
+
+/* Rest of your existing CSS remains unchanged */
+.register-container {
+    background-color: var(--background);
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.register-container h2 {
+    color: var(--dark-blue);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.register-error {
+    color: var(--red);
+    background-color: rgba(216, 35, 35, 0.1);
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    color: var(--blue);
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.form-group input {
+    padding: 0.75rem;
+    border: 1px solid var(--periwinkle);
+    border-radius: 4px;
+    font-size: 1rem;
+    color: var(--dark-blue);
+    background-color: #f9f9f9;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 4px var(--gold);
+}
+
+.error-message {
+    color: var(--red);
+}

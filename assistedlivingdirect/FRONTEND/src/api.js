@@ -3,6 +3,9 @@ import axios from "axios";
 // URL which connects to database in MongoDB
 const URL = "http://localhost:3000/ALD_database";
 
+// Seperate URL for users who are logged in
+const USER_URL = "http://localhost:3000/users";
+
 // Frontend API functions for retrieving data from backend routes via URL
 
 // Retrieve all facilities
@@ -74,3 +77,70 @@ export const deleteFacility = async (id) => {
         return null;
     }
 };
+
+// Registering a new user account
+export async function registerUser(username, email, password) {
+    try {
+        const response = await axios.post(USER_URL, {
+            username, // New field
+            email,
+            password,
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error registering user:", error.message);
+        throw error;
+    }
+}
+
+// Logging in a user with a registered account
+export async function loginUser(identifier, password) {
+    try {
+        const response = await axios.post(`${USER_URL}/login`, { identifier, password });
+        return response.data; // Returns { username, email }
+    } catch (error) {
+        console.error("Error logging in user:", error.message);
+        throw error;
+    }
+}
+
+// Updating user account for ability to edit
+export async function updateUser(currentUsername, newUsername, newEmail) {
+    try {
+        const response = await axios.put(`${USER_URL}/${currentUsername}`, {
+            username: newUsername,
+            email: newEmail,
+        });
+        return response.data; // Returns updated { username, email }
+    } catch (error) {
+        console.error("Error updating user:", error.message);
+        throw error.response?.data?.error || error;
+    }
+}
+
+// Deleting a user's account
+export async function deleteUser(username, password) {
+    try {
+        const response = await axios.delete(`${USER_URL}/${username}`, {
+            data: { password }, // Send password in request body
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error deleting user:", error.message);
+        throw error;
+    }
+}
+
+// Changing a user's password
+export async function changePassword(username, currentPassword, newPassword) {
+    try {
+        const response = await axios.patch(`${USER_URL}/${username}/password`, {
+            currentPassword,
+            newPassword,
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error changing password:", error.message);
+        throw error.response?.data?.error || error;
+    }
+}

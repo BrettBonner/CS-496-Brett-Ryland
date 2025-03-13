@@ -3,6 +3,7 @@ import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import axios from "axios";
 import "./Facility.css";
 
+// CSS for container of Google Maps to ensure it is big enough for display
 const mapContainerStyle = {
   width: "100%",
   height: "100vh",

@@ -1,0 +1,99 @@
+.login-container {
+    background-color: var(--background); /* White background */
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    min-height: 100vh; /* Full height for centering */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.logo {
+    justify-content: center;
+}
+
+.logo img {
+    width: 100%; /* Adjust size as needed, matching Navbar */
+    height: auto;
+}
+
+.login-container h2 {
+    color: var(--dark-blue); /* #080233 - Dark blue for heading */
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.login-error {
+    color: var(--red); /* #D82323 - Red for error messages */
+    background-color: rgba(216, 35, 35, 0.1); /* Light red background */
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    color: var(--blue); /* #150485 - Blue for labels */
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.form-group input {
+    padding: 0.75rem;
+    border: 1px solid var(--periwinkle); /* #736F91 - Periwinkle border */
+    border-radius: 4px;
+    font-size: 1rem;
+    color: var(--dark-blue); /* #080233 - Dark blue for input text */
+    background-color: #f9f9f9; /* Light gray background for contrast */
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--gold); /* #FFB300 - Gold on focus */
+    box-shadow: 0 0 4px var(--gold);
+}
+
+.btn-login {
+    background-color: var(--magenta); /* #C62A8B - Magenta button */
+    color: var(--dark-blue); /* #080233 - Dark blue text (not white) */
+    padding: 0.75rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+}
+
+.btn-login:hover {
+    background-color: var(--orange); /* #FF5733 - Orange on hover */
+}
+
+.login-container p {
+    color: var(--periwinkle); /* #736F91 - Periwinkle for paragraph text */
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.login-container a {
+    color: var(--gold); /* #FFB300 - Gold for link */
+    text-decoration: none;
+}
+
+.login-container a:hover {
+    color: var(--orange); /* #FF5733 - Orange on hover */
+}

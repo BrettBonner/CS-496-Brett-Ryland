@@ -16,7 +16,6 @@ function Home({ fetchFacilities }) {
         <button
           className="cta-button"
           onClick={async () => {
-            console.log("Find Your Facilities button clicked!");
             await fetchFacilities(); // Fetch data first
             navigate("/facilitysearch"); // Navigate to new page
           }}

@@ -1,0 +1,206 @@
+.account-container {
+    background-color: var(--background);
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.logo img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+}
+
+.account-container h2 {
+    color: var(--dark-blue);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.account-error {
+    color: var(--red);
+    background-color: rgba(216, 35, 35, 0.1);
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.account-success {
+    color: green;
+    background-color: rgba(0, 255, 0, 0.1);
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.account-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    text-align: center;
+    align-items: center;
+}
+
+.account-details p {
+    color: var(--periwinkle);
+    margin: 0;
+}
+
+.account-form, .password-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    color: var(--blue);
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    text-align: left;
+}
+
+.form-group input {
+    padding: 0.75rem;
+    border: 1px solid var(--periwinkle);
+    border-radius: 4px;
+    font-size: 1rem;
+    color: var(--dark-blue);
+    background-color: #f9f9f9;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 4px var(--gold);
+}
+
+.form-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.edit-btn, .change-password-btn, .save-btn, .cancel-btn, .logout-btn, .delete-btn {
+    padding: 0.75rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+    width: 100%;
+    max-width: 200px;
+}
+
+.edit-btn {
+    background-color: var(--gold);
+    color: var(--dark-blue);
+}
+
+.edit-btn:hover {
+    background-color: var(--orange);
+}
+
+.change-password-btn {
+    background-color: var(--red);
+    color: var(--dark-blue);
+}
+
+.change-password-btn:hover {
+    background-color: var(--orange);
+}
+
+.save-btn {
+    background-color: var(--magenta);
+    color: var(--dark-blue);
+}
+
+.save-btn:hover {
+    background-color: var(--orange);
+}
+
+.cancel-btn {
+    background-color: var(--periwinkle);
+    color: var(--dark-blue);
+}
+
+.cancel-btn:hover {
+    background-color: var(--orange);
+}
+
+.logout-btn {
+    background-color: var(--magenta);
+    color: var(--dark-blue);
+}
+
+.logout-btn:hover {
+    background-color: var(--orange);
+}
+
+.delete-section {
+    margin-top: 2rem;
+    text-align: center;
+    width: 100%;
+}
+
+.delete-section h3 {
+    color: var(--dark-blue);
+    margin-bottom: 1rem;
+}
+
+.delete-section p {
+    color: var(--periwinkle);
+    margin-bottom: 0.5rem;
+}
+
+.password-input {
+    padding: 0.75rem;
+    border: 1px solid var(--periwinkle);
+    border-radius: 4px;
+    font-size: 1rem;
+    color: var(--dark-blue);
+    background-color: #f9f9f9;
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto 1rem;
+    display: block;
+}
+
+.password-input:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 4px var(--gold);
+}
+
+.delete-btn {
+    background-color: var(--red);
+    color: var(--dark-blue);
+}
+
+.delete-btn:hover {
+    background-color:var(--orange);
+}
