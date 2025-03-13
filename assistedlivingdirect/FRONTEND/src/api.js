@@ -107,13 +107,15 @@ export async function loginUser(identifier, password) {
 // Updating user account for ability to edit
 export async function updateUser(currentUsername, newUsername, newEmail) {
     try {
+        console.log(`Sending PUT request to ${USER_URL}/${currentUsername}`, { newUsername, newEmail });
         const response = await axios.put(`${USER_URL}/${currentUsername}`, {
             username: newUsername,
             email: newEmail,
         });
-        return response.data; // Returns updated { username, email }
+        console.log("PUT response received:", response.status, response.data);
+        return response.data;
     } catch (error) {
-        console.error("Error updating user:", error.message);
+        console.error("Error updating user:", error.message, error.response?.data);
         throw error.response?.data?.error || error;
     }
 }

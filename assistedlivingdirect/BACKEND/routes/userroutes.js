@@ -75,6 +75,8 @@ userroutes.put("/:username", async (request, response) => {
         const { username } = request.params;
         const { username: newUsername, email: newEmail } = request.body;
 
+        console.log("Update request received:", { username, newUsername, newEmail });
+
         // Validate input
         if (!newUsername || !newEmail) {
             return response.status(400).json({ error: "Username and email are required" });
@@ -82,6 +84,7 @@ userroutes.put("/:username", async (request, response) => {
 
         const user = await db.collection(dbCollection).findOne({ username });
         if (!user) {
+            console.log("User not found:", username);
             return response.status(404).json({ error: "User not found" });
         }
 
@@ -113,9 +116,13 @@ userroutes.put("/:username", async (request, response) => {
             return response.status(400).json({ error: "No changes made" });
         }
 
-        // Get the updated user
+        // Get the updated user and send response
         const updatedUser = await db.collection(dbCollection).findOne({ username: newUsername });
-    
+        console.log("User updated successfully:", updatedUser);
+        response.status(200).json({
+            username: updatedUser.username,
+            email: updatedUser.email,
+        });
     } catch (error) {
         console.error("Error updating user: ", error.stack);
         response.status(500).json({ error: "Failed to update user", details: error.message });
