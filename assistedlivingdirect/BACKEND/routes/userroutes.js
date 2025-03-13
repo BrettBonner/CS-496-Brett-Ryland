@@ -207,4 +207,95 @@ userroutes.patch("/:username/password", async (request, response) => {
     }
 });
 
+// Add facility to saved list
+userroutes.post("/:username/saved-facilities", async (request, response) => {
+    try {
+        const db = getDB();
+        const { username } = request.params;
+        const { facilityId } = request.body;
+
+        if (!ObjectId.isValid(facilityId)) {
+            return response.status(400).json({ error: "Invalid facility ID" });
+        }
+
+        const user = await db.collection(dbCollection).findOne({ username });
+        if (!user) {
+            return response.status(404).json({ error: "User not found" });
+        }
+
+        const facilityExists = await db.collection("Facility Info V2").findOne({ _id: new ObjectId(facilityId) });
+        if (!facilityExists) {
+            return response.status(404).json({ error: "Facility not found" });
+        }
+
+        const updateResult = await db.collection(dbCollection).updateOne(
+            { username },
+            { $addToSet: { savedFacilities: new ObjectId(facilityId) } } // $addToSet prevents duplicates
+        );
+
+        if (updateResult.matchedCount === 0) {
+            return response.status(404).json({ error: "User not found" });
+        }
+
+        response.status(200).json({ message: "Facility saved successfully" });
+    } catch (error) {
+        console.error("Error saving facility: ", error.stack);
+        response.status(500).json({ error: "Failed to save facility", details: error.message });
+    }
+});
+
+// Remove facility from saved list
+userroutes.delete("/:username/saved-facilities/:facilityId", async (request, response) => {
+    try {
+        const db = getDB();
+        const { username, facilityId } = request.params;
+
+        if (!ObjectId.isValid(facilityId)) {
+            return response.status(400).json({ error: "Invalid facility ID" });
+        }
+
+        const user = await db.collection(dbCollection).findOne({ username });
+        if (!user) {
+            return response.status(404).json({ error: "User not found" });
+        }
+
+        const updateResult = await db.collection(dbCollection).updateOne(
+            { username },
+            { $pull: { savedFacilities: new ObjectId(facilityId) } }
+        );
+
+        if (updateResult.matchedCount === 0) {
+            return response.status(404).json({ error: "User not found" });
+        }
+
+        response.status(200).json({ message: "Facility removed successfully" });
+    } catch (error) {
+        console.error("Error removing facility: ", error.stack);
+        response.status(500).json({ error: "Failed to remove facility", details: error.message });
+    }
+});
+
+// Get saved facilities
+userroutes.get("/:username/saved-facilities", async (request, response) => {
+    try {
+        const db = getDB();
+        const { username } = request.params;
+
+        const user = await db.collection(dbCollection).findOne({ username });
+        if (!user) {
+            return response.status(404).json({ error: "User not found" });
+        }
+
+        const savedFacilityIds = user.savedFacilities || [];
+        const savedFacilities = await db.collection("Facility Info V2").find({
+            _id: { $in: savedFacilityIds.map(id => new ObjectId(id)) }
+        }).toArray();
+
+        response.status(200).json(savedFacilities);
+    } catch (error) {
+        console.error("Error retrieving saved facilities: ", error.stack);
+        response.status(500).json({ error: "Failed to retrieve saved facilities", details: error.message });
+    }
+});
+
 module.exports = userroutes;

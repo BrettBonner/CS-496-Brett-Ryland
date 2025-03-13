@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext"; // Adjust path
+import { useAuth } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
-import { updateUser, deleteUser, changePassword } from "../../api"; // Add changePassword
+import { updateUser, deleteUser, changePassword, getSavedFacilities, getFacilityByIdWithUpdate, removeSavedFacility } from "../../api";
 import "./Account.css";
 
 function Account() {
     const { user, logout, setUser } = useAuth();
     const navigate = useNavigate();
     const [editMode, setEditMode] = useState(false);
-    const [passwordChangeMode, setPasswordChangeMode] = useState(false); // New state for password change mode
+    const [passwordChangeMode, setPasswordChangeMode] = useState(false);
     const [formData, setFormData] = useState({
         username: user?.username || "",
         email: user?.email || "",
@@ -21,6 +21,82 @@ function Account() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
+    const [savedFacilities, setSavedFacilities] = useState([]);
+    const [previousBeds, setPreviousBeds] = useState({}); // Track previous bed counts
+    const [notifications, setNotifications] = useState([]);
+
+    useEffect(() => {
+        let intervalId;
+        const fetchSavedFacilities = async () => {
+            if (user) {
+                try {
+                    console.log("Polling saved facilities at:", new Date().toLocaleTimeString());
+                    const facilities = await getSavedFacilities(user.username);
+                    console.log("Fetched saved facilities:", facilities);
+
+                    // Check for changes by comparing against previousBeds state
+                    await checkForBedChanges(facilities);
+
+                    // Update savedFacilities after checking for changes
+                    setSavedFacilities(facilities);
+                } catch (err) {
+                    console.error("Failed to fetch saved facilities:", err);
+                }
+            }
+        };
+        
+        fetchSavedFacilities();
+        intervalId = setInterval(fetchSavedFacilities, 30000);
+        return () => clearInterval(intervalId);
+    }, [user?.username]);
+
+    const checkForBedChanges = async (facilities) => {
+        // Store current bed counts for all facilities in this cycle
+        const currentBedCounts = {};
+
+        // First, fetch the latest data for each facility and store the current bed counts
+        for (const facility of facilities) {
+            try {
+                const updatedFacility = await getFacilityByIdWithUpdate(facility._id);
+                const currentBedsCount = Number(updatedFacility["Number of Beds"]) || 0;
+                currentBedCounts[facility._id] = currentBedsCount;
+            } catch (err) {
+                console.error("Error fetching facility update:", err);
+                currentBedCounts[facility._id] = Number(facility["Number of Beds"]) || 0; // Fallback to saved value
+            }
+        }
+
+        // Now compare with previousBeds and generate notifications
+        for (const facility of facilities) {
+            const currentBedsCount = currentBedCounts[facility._id];
+            const previousBedsCount = previousBeds[facility._id] !== undefined 
+                ? previousBeds[facility._id] 
+                : Number(facility["Number of Beds"]) || 0;
+
+            console.log(`Comparing facility ${facility.Licensee}: Previous beds=${previousBedsCount}, Current beds=${currentBedsCount}`);
+
+            // Create notification if beds have changed
+            if (previousBedsCount !== currentBedsCount) {
+                const newNotification = {
+                    id: Date.now(), // Unique ID for each notification
+                    message: `Facility ${facility.Licensee || "Unnamed"} has changed beds from ${previousBedsCount} to ${currentBedsCount}`,
+                    timestamp: new Date(),
+                };
+
+                setNotifications(prev => {
+                    const isDuplicate = prev.some(n => n.message === newNotification.message);
+                    if (!isDuplicate) {
+                        console.log("New notification added:", newNotification);
+                        return [newNotification, ...prev].slice(0, 10);
+                    }
+                    return prev;
+                });
+            }
+        }
+
+        // Update previousBeds with the current values for the next cycle
+        setPreviousBeds(currentBedCounts);
+    };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -85,12 +161,40 @@ function Account() {
         navigate("/");
     };
 
+    const dismissNotification = (notificationId) => {
+        setNotifications(prev => prev.filter(n => n.id !== notificationId));
+    };
+
     if (!user) {
         return <div>Please log in to view your account.</div>;
     }
 
     return (
         <div className="account-container">
+            <div className="notifications">
+                <div className="notification-container">
+                    <h3>Notifications</h3>
+                    {notifications.length > 0 ? (
+                        notifications.map((notif) => (
+                            <div key={notif.id} className="notification">
+                                <span className="notification-message">
+                                    {notif.message} ({notif.timestamp.toLocaleTimeString()})
+                                </span>
+                                <button 
+                                    className="dismiss-notification" 
+                                    onClick={() => dismissNotification(notif.id)}
+                                >
+                                    ×
+                                </button>
+                            </div>
+                        ))
+                    ) : (
+                        <div className="notification">
+                            No new notifications
+                        </div>
+                    )}
+                </div>
+            </div>
             <div className="logo">
                 <Link to="/">
                     <img src="../src/assets/navbarlogo.jpg" alt="Assisted Living Direct" />
@@ -177,6 +281,30 @@ function Account() {
                     </div>
                 </form>
             )}
+            <div className="saved-facilities-section">
+                <h3>Saved Facilities</h3>
+                {savedFacilities.length === 0 ? (
+                    <p>No saved facilities yet.</p>
+                ) : (
+                    <ul>
+                        {savedFacilities.map((facility) => (
+                            <li key={facility._id}>
+                                {facility.Licensee || "No Name"} - {facility["Street Address"] || "No Address"}
+                                <button
+                                    className="remove-btn"
+                                    onClick={() => {
+                                        removeSavedFacility(user.username, facility._id).then(() => {
+                                            setSavedFacilities(savedFacilities.filter(f => f._id !== facility._id));
+                                        });
+                                    }}
+                                >
+                                    Remove
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
             <div className="delete-section">
                 <h3>Delete Account</h3>
                 <p>Enter your password to permanently delete your account:</p>

@@ -146,3 +146,47 @@ export async function changePassword(username, currentPassword, newPassword) {
         throw error.response?.data?.error || error;
     }
 }
+
+// Save a facility
+export async function saveFacility(username, facilityId) {
+    try {
+        const response = await axios.post(`${USER_URL}/${username}/saved-facilities`, { facilityId });
+        return response.data;
+    } catch (error) {
+        console.error("Error saving facility:", error.message);
+        throw error.response?.data?.error || error;
+    }
+}
+
+// Remove a saved facility
+export async function removeSavedFacility(username, facilityId) {
+    try {
+        const response = await axios.delete(`${USER_URL}/${username}/saved-facilities/${facilityId}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error removing facility:", error.message);
+        throw error.response?.data?.error || error;
+    }
+}
+
+// Get saved facilities
+export async function getSavedFacilities(username) {
+    try {
+        const response = await axios.get(`${USER_URL}/${username}/saved-facilities`);
+        return response.data;
+    } catch (error) {
+        console.error("Error retrieving saved facilities:", error.message);
+        throw error.response?.data?.error || error;
+    }
+}
+
+// Get facility by ID with update check
+export async function getFacilityByIdWithUpdate(id) {
+    try {
+        const response = await axios.get(`${URL}/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching facility with update:", error.message);
+        throw error.response?.data?.error || error;
+    }
+}

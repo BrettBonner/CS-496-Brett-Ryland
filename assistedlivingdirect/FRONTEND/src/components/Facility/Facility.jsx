@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import { useAuth } from "../../context/AuthContext"; // Adjust path
+import { saveFacility, removeSavedFacility } from "../../api"; // Add new functions
 import "./Facility.css";
 
 const mapContainerStyle = {
@@ -13,6 +15,7 @@ const defaultCenter = {
 };
 
 function Facility({ facilities }) {
+  const { user } = useAuth();
   const [searchQuery, setSearchQuery] = useState("");
   const [visibleCount, setVisibleCount] = useState(50);
   const [mapCenter, setMapCenter] = useState(defaultCenter);
@@ -31,7 +34,6 @@ function Facility({ facilities }) {
   }, [facilities, searchQuery]);
 
   const visibleFacilities = allFilteredFacilities.slice(0, visibleCount);
-  console.log("Visible Facilities:", visibleFacilities);
 
   // Set initial map center on mount
   useEffect(() => {
@@ -54,6 +56,19 @@ function Facility({ facilities }) {
     }
   }, [selectedFacility]);
 
+  const handleSaveFacility = async (facilityId) => {
+    if (!user) {
+      alert("Please log in to save facilities.");
+      return;
+    }
+    try {
+      await saveFacility(user.username, facilityId);
+      console.log(`Facility ${facilityId} saved for user ${user.username}`);
+    } catch (err) {
+      console.error("Failed to save facility:", err);
+    }
+  };
+
   return (
     <div className="facilities-container">
       <div className="facilities-list" ref={listRef}>
@@ -71,7 +86,7 @@ function Facility({ facilities }) {
         <p className="result-count">{allFilteredFacilities.length} locations found</p>
         {visibleFacilities.map((facility, index) => (
           <div
-            key={facility._id || index} 
+            key={facility._id || index}
             id={`facility-${index}`}
             className={`facility-card ${selectedFacility === index ? "selected" : ""}`}
             onClick={() => {
@@ -118,6 +133,17 @@ function Facility({ facilities }) {
               <button className="action-button email">Email</button>
               <button className="action-button call">Call</button>
               <button className="action-button directions">Get Directions</button>
+              {user && (
+                <button
+                  className="action-button save"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent card click
+                    handleSaveFacility(facility._id);
+                  }}
+                >
+                  Save
+                </button>
+              )}
             </div>
           </div>
         ))}
@@ -142,11 +168,11 @@ function Facility({ facilities }) {
               .filter((facility) => facility.lat && facility.lng)
               .map((facility, index) => (
                 <Marker
-                  key={facility._id || index} 
+                  key={facility._id || index}
                   position={{ lat: facility.lat, lng: facility.lng }}
                   onClick={() => {
                     const facilityIndex = visibleFacilities.findIndex(
-                      (f) => f._id === facility._id 
+                      (f) => f._id === facility._id
                     );
                     console.log(
                       `Clicked marker for ${facility.Licensee} (Bel Air), selected index: ${facilityIndex}`

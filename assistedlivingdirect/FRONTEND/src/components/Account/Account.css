@@ -204,3 +204,83 @@
 .delete-btn:hover {
     background-color:var(--orange);
 }
+
+.saved-facilities-section {
+    background-color: rgb(196, 196, 255);
+    margin-top: 2rem;
+    text-align: center;
+    width: 100%;
+}
+
+.saved-facilities-section h3 {
+    color: var(--dark-blue);
+    margin-bottom: 1rem;
+}
+
+.saved-facilities-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.saved-facilities-section li {
+    background-color: #260184;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.remove-btn {
+    background-color: var(--red);
+    color: var(--dark-blue);
+    padding: 0.25rem 0.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.remove-btn:hover {
+    background-color: darkred;
+}
+
+.notification-container {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #b861b7;
+  }
+  
+  .notification {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 8px;
+    background-color: rgb(31, 7, 129);
+    border-left: 4px solid #3498db;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .notification-message {
+    flex-grow: 1;
+  }
+  
+  .dismiss-notification {
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0 5px;
+    margin-left: 10px;
+  }
+  
+  .dismiss-notification:hover {
+    color: #333;
+  }

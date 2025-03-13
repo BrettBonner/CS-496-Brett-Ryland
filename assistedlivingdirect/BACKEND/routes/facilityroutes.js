@@ -11,6 +11,14 @@ const dbcollection = "Facility Info V2"
 // to the backend. Each route corresponds to a different 
 // functionality for managing the database
 
+// Middleware to add update timestamp
+const addTimestamp = (req, res, next) => {
+    if (req.body && req.body["Number of Beds"] !== undefined) {
+        req.body.updatedAt = new Date();
+    }
+    next();
+};
+
 // Retrieving all ALD_database
 facilityRoutes.get("/ALD_database", async (request, response) => {
     try {
@@ -81,15 +89,14 @@ facilityRoutes.post("/ALD_database", async (request, response) => {
 facilityRoutes.put("/ALD_database/:id", async (request, response) => {
     try {
         const db = getDB();
-        const updateData = { ...request.body };
-        
+        const updateData = { ...request.body, updatedAt: new Date() };
+        console.log("Updating facility with ID:", request.params.id, "Data:", updateData);
         const insertedFacility = await db.collection(dbcollection).updateOne(
             { _id: new ObjectId(request.params.id) },
             { $set: updateData }
         );
-
+        console.log("Update result:", insertedFacility);
         response.json(insertedFacility);
-
     } catch (error) {
         console.error("Error updating facility: ", error.message);
         response.status(500).json({ error: "Failed to update facility" });
