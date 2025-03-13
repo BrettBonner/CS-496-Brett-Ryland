@@ -2,7 +2,7 @@
 .navbar {
   width: 100%;
   background: white;  /* Using the blue from color scheme */
-  padding: 15px 20px;
+  padding: 1px 20px;
   display: flex;
   justify-content: center;
   align-items: center;

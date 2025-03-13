@@ -103,3 +103,44 @@ export async function loginUser(identifier, password) {
         throw error;
     }
 }
+
+// Updating user account for ability to edit
+export async function updateUser(currentUsername, newUsername, newEmail) {
+    try {
+        const response = await axios.put(`${USER_URL}/${currentUsername}`, {
+            username: newUsername,
+            email: newEmail,
+        });
+        return response.data; // Returns updated { username, email }
+    } catch (error) {
+        console.error("Error updating user:", error.message);
+        throw error.response?.data?.error || error;
+    }
+}
+
+// Deleting a user's account
+export async function deleteUser(username, password) {
+    try {
+        const response = await axios.delete(`${USER_URL}/${username}`, {
+            data: { password }, // Send password in request body
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error deleting user:", error.message);
+        throw error;
+    }
+}
+
+// Changing a user's password
+export async function changePassword(username, currentPassword, newPassword) {
+    try {
+        const response = await axios.patch(`${USER_URL}/${username}/password`, {
+            currentPassword,
+            newPassword,
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error changing password:", error.message);
+        throw error.response?.data?.error || error;
+    }
+}
