@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { act } from 'react-dom/test-utils'; // Import act for wrapping state updates
+import { act } from 'react'; // Import act for wrapping state updates within file
 import Facility from './Facility.jsx';
 import axios from 'axios';
 

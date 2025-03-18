@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Home from './Home';
 
-// Create a mock navigate function
+// Create a mock navigate function for traversing website
 const mockNavigate = jest.fn();
 
 // Mock the react-router-dom module

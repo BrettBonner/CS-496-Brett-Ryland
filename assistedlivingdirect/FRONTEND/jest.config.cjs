@@ -1,8 +1,8 @@
 module.exports = {
   // Mock testing environment, also responsible for translating between .js files and ES6
   testEnvironment: "jest-environment-jsdom",
-  collectCoverage: false,
-  coverageReporters: ["text", "text-summary"],
+  collectCoverage: true,
+  coverageReporters: ["text", "text-summary", "html"],
   transform: {
     "^.+\\.(js|jsx)$": "babel-jest",
   },
