@@ -3,6 +3,9 @@
   text-align: center;
   margin: 20px;
   background-color: #ffffff; /* White background for the entire container to match navbar */
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
 }
 
 /* Button Styling */
@@ -36,13 +39,7 @@
   margin-top: 10px;
 }
 
-/* Facilities Grid */
-.facilities-container {
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
-}
-
+/* Facilities List */
 .facilities-list {
   width: 30%;
   max-height: 100vh;
@@ -54,6 +51,7 @@
   background-color: #ffffff; /* White background for the list area to match navbar */
 }
 
+/* Facility Card */
 .facility-card {
   display: flex;
   flex-direction: column;
@@ -192,56 +190,92 @@
   background-color: #7d3c9d;
 }
 
-/* Search Bar Styling */
+/* Search Bar and Filter Button */
 .search-bar-container {
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 100%;
-  margin-top: 10px; /* Keeps search bar down slightly to avoid cropping */
-  margin-bottom: 10px;
+  gap: 10px;
+  margin-top: 10px; /* Add small margin to move down from navbar */
 }
 
 .search-bar {
   display: flex;
   align-items: center;
-  width: 90%;
-  max-width: 300px;
-  padding: 10px;
-  border-radius: 25px;
-  background-color: #ffffff; /* White background */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Stronger shadow for distinction */
-  border: 2px solid #8e44ad; /* Purple border for contrast against white */
+  flex: 1;
 }
 
 .search-bar input {
-  width: 100%;
-  border: none;
+  flex: 1;
   padding: 8px;
-  border-radius: 25px;
-  outline: none;
+  border: 1px solid #ddd;
+  border-radius: 5px;
   font-size: 14px;
-  color: #333;
-}
-
-.search-bar input::placeholder {
-  color: #8e44ad; /* Purple placeholder text for distinctiveness */
 }
 
 .search-button {
+  background-color: #a100a1; /* Purple to match Figma */
+  color: white;
   border: none;
-  background: none;
-  font-size: 18px; /* Slightly larger search icon */
+  padding: 8px;
+  border-radius: 5px;
   cursor: pointer;
-  padding: 6px;
-  color: #8e44ad; /* Purple search icon for consistency */
+}
+
+.filter-button-container {
+  position: relative;
+}
+
+.filter-button {
+  background-color: #a100a1; /* Purple to match Figma */
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+}
+
+.filter-popdown {
+  position: absolute;
+  top: 45px;
+  right: 0; /* Align to the right of the button */
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 250px; /* Increased width to ensure labels fit */
+}
+
+.filter-group {
+  margin-bottom: 15px;
+}
+
+.filter-group label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  color: #333;
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.filter-group select {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
 }
 
 /* Result Count */
 .result-count {
   font-size: 14px;
-  font-weight: bold;
-  text-align: center;
   color: #666;
-  margin-bottom: 10px;
+  margin: 10px 0;
 }
