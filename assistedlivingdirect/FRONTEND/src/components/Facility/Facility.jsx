@@ -33,8 +33,29 @@ function Facility({ facilities }) {
   const listRef = useRef(null);
   const isUserScrolling = useRef(false);
 
+  // Get browser geolocation on mount
   useEffect(() => {
-    if (searchQuery) {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const coords = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          setUserLocation((prev) => prev ?? coords);
+          setMapCenter((prev) => prev ?? coords);
+        },
+        (error) => {
+          console.warn("Geolocation error:", error);
+          setGeocodeError("Unable to access your location.");
+        }
+      );
+    }
+  }, []);
+
+  // Update userLocation when search query is submitted
+  useEffect(() => {
+    if (searchQuery.trim()) {
       const geocodeAddress = async () => {
         try {
           const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -46,25 +67,23 @@ function Facility({ facilities }) {
           if (response.data.results.length > 0) {
             const { lat, lng } = response.data.results[0].geometry.location;
             setUserLocation({ lat, lng });
+            setMapCenter({lat, lng})
             setGeocodeError(null);
           } else {
-            setUserLocation(null);
             setGeocodeError("Could not find location.");
           }
         } catch (err) {
-          setUserLocation(null);
           setGeocodeError("Error geocoding location.");
         }
       };
       geocodeAddress();
     } else {
-      setUserLocation(null);
-      setGeocodeError(null);
+      setGeocodeError(null); // Don't clear userLocation
     }
   }, [searchQuery]);
 
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
-    const R = 3958.8;
+    const R = 3958.8; // Radius of Earth in miles
     const dLat = (lat2 - lat1) * (Math.PI / 180);
     const dLon = (lon2 - lon1) * (Math.PI / 180);
     const a =
@@ -102,6 +121,7 @@ function Facility({ facilities }) {
         const lng = parseFloat(f.lng);
         if (isNaN(lat) || isNaN(lng)) return false;
         const dist = calculateDistance(userLocation.lat, userLocation.lng, lat, lng);
+        console.log(`Facility "${f["Licensee"]}" is ${dist.toFixed(2)} miles away`);
         return dist <= filters.radius;
       });
     }
@@ -124,10 +144,18 @@ function Facility({ facilities }) {
     if (first) {
       const lat = parseFloat(first.lat);
       const lng = parseFloat(first.lng);
-      setMapCenter({ lat, lng });
+      const newCenter = { lat, lng };
+      
+      if (
+        !mapCenter ||
+        mapCenter.lat.toFixed(4) !== lat.toFixed(4) ||
+        mapCenter.lng.toFixed(4) !== lng.toFixed(4)
+      ) {
+        setMapCenter({ lat, lng });
       if (mapRef.current) {
-        mapRef.current.panTo({ lat, lng });
+        mapRef.current.panTo(newCenter);
         mapRef.current.setZoom(10);
+        }
       }
     }
   }, [facilitiesWithCoords]);
@@ -147,7 +175,6 @@ function Facility({ facilities }) {
       isUserScrolling.current = true;
       setTimeout(() => (isUserScrolling.current = false), 1000);
     };
-
     const list = listRef.current;
     list?.addEventListener("scroll", handleScroll);
     return () => list?.removeEventListener("scroll", handleScroll);
@@ -324,7 +351,15 @@ function Facility({ facilities }) {
             zoom={10}
             center={mapCenter}
             onLoad={(map) => (mapRef.current = map)}
-            options={{ gestureHandling: "greedy" }}
+            options={{
+              gestureHandling: "auto",
+              draggable: true,
+              zoomControl: true,
+              scrollwheel: true,
+              disableDoubleClickZoom: false,
+              fullscreenControl: true,
+              mapTypeControl: true,
+            }}
           >
             {facilitiesWithCoords.map((facility) => (
               <Marker

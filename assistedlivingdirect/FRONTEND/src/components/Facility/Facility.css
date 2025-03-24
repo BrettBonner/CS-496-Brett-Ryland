@@ -1,8 +1,7 @@
 /* Main container */
 .facilities-container {
   text-align: center;
-  margin: 20px;
-  background-color: #ffffff; /* White background for the entire container to match navbar */
+  background-color: #ffffff;
   display: flex;
   flex-direction: row;
   height: 100vh;
@@ -10,7 +9,7 @@
 
 /* Button Styling */
 .cta-button {
-  background-color: #8e44ad; /* Purple to match navbar theme */
+  background-color: #8e44ad;
   color: white;
   font-size: 1.2rem;
   padding: 12px 24px;
@@ -21,7 +20,7 @@
 }
 
 .cta-button:hover {
-  background-color: #7d3c9d; /* Darker purple on hover */
+  background-color: #7d3c9d;
 }
 
 /* Loading & Error Messages */
@@ -48,14 +47,16 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-  background-color: #ffffff; /* White background for the list area to match navbar */
+  background-color: #ffffff;
+  z-index: 1;
+  position: relative;
 }
 
 /* Facility Card */
 .facility-card {
   display: flex;
   flex-direction: column;
-  background-color: #ffffff; /* White background for cards */
+  background-color: #ffffff;
   padding: 15px;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -71,9 +72,9 @@
 }
 
 .facility-card.selected {
-  border: 3px solid #8e44ad; /* Purple border for selected state, matching navbar */
+  border: 3px solid #8e44ad;
   box-shadow: 0 6px 12px rgba(142, 68, 173, 0.3);
-  background-color: #f8f9fa; /* Very light gray for subtle distinction */
+  background-color: #f8f9fa;
   transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
@@ -105,9 +106,9 @@
 }
 
 .facility-logo-img {
-  width: 30px; /* Very small width to match the screenshot */
-  height: auto; /* Maintain aspect ratio */
-  vertical-align: middle; /* Align with text if needed */
+  width: 30px;
+  height: auto;
+  vertical-align: middle;
 }
 
 /* Facility Details (Beds or Certifications) */
@@ -120,12 +121,12 @@
 
 .beds-icon {
   margin-right: 5px;
-  color: #8e44ad; /* Purple for the bed icon, matching the screenshot */
+  color: #8e44ad;
 }
 
 .medicaid-certified {
   padding: 5px 10px;
-  background-color: #f1c40f; /* Yellow for Medicaid Certified, matching screenshot */
+  background-color: #f1c40f;
   color: #2c3e50;
   border-radius: 20px;
   font-size: 0.8rem;
@@ -135,7 +136,7 @@
 
 .sals-certified {
   padding: 5px 10px;
-  background-color: #f1c40f; /* Yellow for SALS Certified, matching Medicaid style */
+  background-color: #f1c40f;
   color: #2c3e50;
   border-radius: 20px;
   font-size: 0.8rem;
@@ -153,31 +154,34 @@
 .action-button {
   flex: 1;
   padding: 8px 12px;
-  border: 2px solid #666; /* Gray border for neutral look */
+  border: 2px solid #666;
   border-radius: 20px;
   font-size: 0.8rem;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease, border-color 0.3s ease;
-  background-color: #ffffff; /* White background for neutral look */
-  color: #666; /* Gray text for neutrality */
+  background-color: #ffffff;
+  color: #666;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .action-button:hover {
-  background-color: #f5f5f5; /* Light gray on hover for subtle effect */
+  background-color: #f5f5f5;
   transform: translateY(-1px);
-  border-color: #4a4a4a; /* Darker gray border on hover */
+  border-color: #4a4a4a;
 }
 
-/* Map Container */
+/* Map container */
 .map-container {
-  width: 70%;
+  position: relative;
   height: 100vh;
+  width: 70%;
+  z-index: 0;
+  pointer-events: auto;
 }
 
 /* Load More Button */
 .load-more {
-  background-color: #8e44ad; /* Purple to match navbar theme */
+  background-color: #8e44ad;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -195,7 +199,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 10px; /* Add small margin to move down from navbar */
+  margin-top: 10px;
 }
 
 .search-bar {
@@ -213,7 +217,7 @@
 }
 
 .search-button {
-  background-color: #a100a1; /* Purple to match Figma */
+  background-color: #a100a1;
   color: white;
   border: none;
   padding: 8px;
@@ -226,7 +230,7 @@
 }
 
 .filter-button {
-  background-color: #a100a1; /* Purple to match Figma */
+  background-color: #a100a1;
   border: none;
   border-radius: 50%;
   width: 40px;
@@ -242,14 +246,14 @@
 .filter-popdown {
   position: absolute;
   top: 45px;
-  right: 0; /* Align to the right of the button */
+  right: 0;
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 15px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  width: 250px; /* Increased width to ensure labels fit */
+  width: 250px;
 }
 
 .filter-group {
@@ -262,7 +266,7 @@
   gap: 5px;
   font-size: 14px;
   color: #333;
-  white-space: nowrap; /* Prevent text wrapping */
+  white-space: nowrap;
 }
 
 .filter-group select {
