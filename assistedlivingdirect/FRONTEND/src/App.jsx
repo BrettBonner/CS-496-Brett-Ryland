@@ -9,6 +9,7 @@ import FacilitySearch from "./components/FacilitySearch/FacilitySearch";
 import Login from "./components/Login/Login";
 import Register from "./components/Login/Register/Register";
 import Account from "./components/Account/Account";
+import Reviews from "./components/Reviews/FacilityReviewPage"
 import { AuthProvider } from "./context/AuthContext";
 
 function App() {
@@ -57,9 +58,15 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/account" element={<Account />} />
+                    <Route path="/reviews" element={<>
+                    <Navbar />
+                    <Reviews facilities={facilities} />
+                    </>
+                    } />
                 </Routes>
             </Router>
         </AuthProvider>
+    
     );
 }
 

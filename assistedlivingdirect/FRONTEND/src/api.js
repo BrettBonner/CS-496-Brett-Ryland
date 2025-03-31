@@ -6,6 +6,8 @@ const URL = "http://localhost:3000/ALD_database";
 // Seperate URL for users who are logged in
 const USER_URL = "http://localhost:3000/users";
 
+const REVIEW_URL = "http://localhost:3000/reviews";
+
 // Frontend API functions for retrieving data from backend routes via URL
 
 // Retrieve all facilities
@@ -190,3 +192,30 @@ export async function getFacilityByIdWithUpdate(id) {
         throw error.response?.data?.error || error;
     }
 }
+
+export async function getReviewsByFacilityId(facilityId) {
+    try {
+      const response = await axios.get(`${REVIEW_URL}/${facilityId}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching reviews:", error.message);
+      return [];
+    }
+  }
+  
+  export async function submitReview({ facilityId, userId, username, rating, comment }) {
+    try {
+      const response = await axios.post(REVIEW_URL, {
+        facilityId,
+        userId,
+        username,
+        rating,
+        comment,
+        timestamp: new Date().toISOString(),
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error submitting review:", error.message);
+      throw error;
+    }
+  }

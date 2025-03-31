@@ -1,7 +1,9 @@
 /* Navbar Container */
 .navbar {
   width: 100%;
-  background: white;  /* Using the blue from color scheme */
+  background: white; 
+  background-color: transparent;
+  box-shadow: none; /* Using the blue from color scheme */
   padding: 1px 20px;
   display: flex;
   justify-content: center;
