@@ -27,7 +27,7 @@ describe('Home Component', () => {
     // Check for the logo
     const logo = screen.getByAltText('Main Logo');
     expect(logo).toBeInTheDocument();
-    expect(logo).toHaveAttribute('src', '../src/assets/MainLogo.jpeg');
+    expect(logo).toHaveAttribute('src', '../src/assets/MainLogo.png');
     
     // Check for the headings
     expect(screen.getByText('Find The Perfect Home For Your Loved Ones')).toBeInTheDocument();

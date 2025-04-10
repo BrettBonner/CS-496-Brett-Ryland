@@ -9,8 +9,8 @@
 
 /* Button Styling */
 .cta-button {
-  background-color: #8e44ad;
-  color: white;
+  background-color: white;
+  color: var(--dark-blue);
   font-size: 1.2rem;
   padding: 12px 24px;
   border: none;
@@ -20,7 +20,8 @@
 }
 
 .cta-button:hover {
-  background-color: #7d3c9d;
+  background-color: var(--magenta);
+  color: white;
 }
 
 /* Loading & Error Messages */

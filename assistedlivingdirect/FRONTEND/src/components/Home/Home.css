@@ -1,29 +1,31 @@
 .Home-container {
-    width: 100%;
-    height: 90vh;  /* Full screen height */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    background: url('/MainLogo.jpg') center/cover no-repeat; 
-    position: relative;
-    text-align: center;
+  width: 100%;
+  height: 90vh;  /* Full screen height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: url('/MainLogo.png') center/cover no-repeat; 
+  position: relative;
+  text-align: center;
   }
   
   /* Logo Styling */
   .Home-logo {
-    width: 95%; /* Adjust size as needed */
+    width: 100%; /* Adjust size as needed */
     height: auto;
-    margin-top: 12vh;
+    z-index: 1;
+    margin-top: 54vh;
   }
-  
-  /* Home Text */
+ 
   .Home-content {
-    text-align: center;
-    color: white;
-    z-index: 2;
+    position: relative; /* Key for layering */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-  
+
   .Home-content h1 {
     font-size: 3rem;
     font-weight: bold;
@@ -38,18 +40,21 @@
     color: var(--dark-blue);
   }
   
-  /* Call to Action Button */
-  .cta-button {
-    background-color: #ff0080;
-    color: white;
-    padding: 12px 24px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  .cta-button:hover {
-    opacity: 0.9;
-  }
-  
+/* Call to Action Button */
+.cta-button {
+  background-color: var(--dark-blue);
+  color: rgb(255, 255, 255);
+  padding: 12px 24px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  position: absolute;
+  bottom: 30%;   /* Adjust this based on your layout */
+  margin-right: 50lvw;
+  z-index: 2;
+}
+
+.cta-button:hover {
+  opacity: 0.9;
+}

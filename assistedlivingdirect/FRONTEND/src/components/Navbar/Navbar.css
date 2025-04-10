@@ -1,10 +1,11 @@
 /* Navbar Container */
+
 .navbar {
   width: 100%;
   background: white; 
   background-color: transparent;
   box-shadow: none; /* Using the blue from color scheme */
-  padding: 1px 20px;
+  padding: 0px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,7 +18,6 @@
 /* Navbar Content Wrapper */
 .navbar-container {
   width: 90%;
-  max-width: 1200px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -41,19 +41,34 @@
   transition: opacity 0.25s ease;
 }
 
+.right-container a:hover {
+  text-shadow: 0 0 5px white,
+               0 0 2px white,
+               0 0 10px white;
+  transition: text-shadow 0.3s ease;
+}
+
 /* Logo Section */
 .navbar .logo {
   display: flex;
+  justify-content: center;
   align-items: center;
   color: var(--white);
-  font-size: 1.2rem;
-  font-weight: bold;
-  gap: 10px;
+  gap: 20px;
 }
 
 .navbar  .logo img {
-  width: 150px;
-  height: auto;
+  width: 140px;
+  border-radius: 12px;
+  display: block;
+  object-fit: contain;
+  margin-top: 15px;
+}
+
+.navbar .logo img:hover {
+  box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.6); /* white glow */
+  transition: box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
 /* Navigation Links */
@@ -74,10 +89,6 @@
   text-decoration: none;
   font-size: 1rem;
   transition: opacity 0.25s ease;  /* Smooth transition for hover effect */
-}
-
-.nav-links a:hover {
-  opacity: 0.8;
 }
 
 .featured-btn {
@@ -112,5 +123,7 @@
 }
 
 .featured-btn:hover {
-  opacity: 0.9;
+  color: var(--magenta);
+  background-color: rgb(255, 213, 255);
+  transition: background-color 0.3s ease;
 }

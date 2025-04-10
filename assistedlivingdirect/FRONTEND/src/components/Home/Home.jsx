@@ -8,7 +8,7 @@ function Home({ fetchFacilities }) {
   return (
     <section className="Home-container">
       <div className="Home-content">
-        <img src="../src/assets/MainLogo.jpeg" alt="Main Logo" className="Home-logo" />
+        <img src="../src/assets/MainLogo.png" alt="Main Logo" className="Home-logo" />
         <h2>Find The Perfect Home For Your Loved Ones</h2>
         <h1>Discover All Assisted Living in Maryland</h1>
 

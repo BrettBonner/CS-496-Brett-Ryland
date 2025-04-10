@@ -29,6 +29,13 @@
 }
 
 /* Typography Scale */
+@font-face {
+  font-family: 'Proxima Nova';
+  src: url('./fonts/proximanova_bold.otf') format('opentype'); /* Or the appropriate file type */
+  font-weight: bold;
+  font-style: normal;
+}
+
 h1, .h1 {
   font-size: 2.5rem;
   font-weight: 700;
@@ -79,14 +86,9 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: var(--magenta);
   color: var(--white);
   cursor: pointer;
   transition: all 0.25s ease;
-}
-
-button:hover {
-  background-color: var(--orange);
 }
 
 button:focus,
@@ -99,8 +101,4 @@ a {
   color: var(--gold);
   text-decoration: none;
   transition: color 0.25s ease;
-}
-
-a:hover {
-  color: var(--orange);
 }
