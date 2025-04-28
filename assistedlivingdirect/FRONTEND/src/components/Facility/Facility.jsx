@@ -314,9 +314,9 @@ function Facility({ facilities }) {
                 <div className="sals-certified">SALS Certified</div>
               )}
               <div className="facility-actions">
-                <button className="action-button email">Email</button>
-                <button className="action-button call">Call</button>
-                <button className="action-button directions">Get Directions</button>
+                <button className="action-button">Email</button>
+                <button className="action-button">Call</button>
+                <button className="action-button">Get Directions</button>
                 {user && (
                   <button
                     className="action-button save"

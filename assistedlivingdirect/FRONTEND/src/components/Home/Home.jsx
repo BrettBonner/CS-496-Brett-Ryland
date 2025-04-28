@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "./Home.css"; 
+import "./Home.css";
 
 function Home({ fetchFacilities }) {
-  const navigate = useNavigate(); // ✅ Enables navigation
+  const navigate = useNavigate();
 
   return (
     <>
@@ -14,27 +14,36 @@ function Home({ fetchFacilities }) {
 
           <div className="featured-images">
             <div className="featured-image-container">
-              <img src="../src/assets/bestcare.jpg" alt="Featured Facility 1" className="featured-image" />
+              <img src="../src/assets/bestcare.jpg" alt="BestCare Assisted Living" className="featured-image" />
+              <div className="facility-info">
+                <h3>BestCare Assisted Living 639, LLC</h3>
+                <p>639 Main Street, Reisterstown, MD 21136</p>
+                <p>Jurisdiction: Baltimore</p>
+              </div>
             </div>
             <div className="featured-image-container">
-              <img src="../src/assets/woodsbestcare.jpg" alt="Featured Facility 2" className="featured-image" />
+              <img src="../src/assets/woodsbestcare.jpg" alt="Woods Of BestCare Assisted Living" className="featured-image" />
+              <div className="facility-info">
+                <h3>Woods Of BestCare Assisted Living</h3>
+                <p>3830 Baker Road, Westminster, MD 21157</p>
+                <p>County: Carroll</p>
+              </div>
             </div>
           </div>
 
           <h1>Explore Facilities with Current Availability</h1>
           <h4>Discover our featured assisted living facilities, carefully selected for their current bed availability. By providing real-time data on beds, services, and amenities, we strive to offer the same up-to-date availability as hotels do.</h4>
 
-          {/* Button now fetches data and navigates to a new page */}
           <button
             className="cta-button"
             onClick={async () => {
-              await fetchFacilities(); // Fetch data first
-              navigate("/facilitysearch"); // Navigate to new page
+              await fetchFacilities();
+              navigate("/facilitysearch");
             }}
           >
             Find Your Facilities
           </button>
-          
+
           <div className="info-section">
             <div className="info-text">
               <h1>Discover All Assisted Living in Maryland</h1>
@@ -59,7 +68,7 @@ function Home({ fetchFacilities }) {
           </div>
         </div>
       </section>
-  
+
       <footer className="site-footer">
         <img src="../src/assets/footer.jpg" alt="Footer House" className="footer-image" />
       </footer>

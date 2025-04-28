@@ -73,8 +73,8 @@
 }
 
 .facility-card.selected {
-  border: 3px solid #8e44ad;
-  box-shadow: 0 6px 12px rgba(142, 68, 173, 0.3);
+  border: var(--magenta);
+  box-shadow: 0 6px 12px rgb(255, 197, 255);
   background-color: #f8f9fa;
   transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
@@ -122,7 +122,7 @@
 
 .beds-icon {
   margin-right: 5px;
-  color: #8e44ad;
+  color: var(--magenta);
 }
 
 .medicaid-certified {
@@ -147,6 +147,7 @@
 
 /* Facility Actions (Buttons) */
 .facility-actions {
+  color: var(--magenta);
   display: flex;
   gap: 10px;
   margin-top: 15px;
@@ -155,20 +156,20 @@
 .action-button {
   flex: 1;
   padding: 8px 12px;
-  border: 2px solid #666;
+  border: 2px solid var(--magenta);  /* Changed from #666 to var(--magenta) */
   border-radius: 20px;
   font-size: 0.8rem;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease, border-color 0.3s ease;
   background-color: #ffffff;
-  color: #666;
+  color: var(--magenta);  /* Changed from #666 to var(--magenta) */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .action-button:hover {
   background-color: #f5f5f5;
   transform: translateY(-1px);
-  border-color: #4a4a4a;
+  border-color: var(--magenta);  /* Changed from #4a4a4a to var(--magenta) */
 }
 
 /* Map container */
@@ -182,7 +183,7 @@
 
 /* Load More Button */
 .load-more {
-  background-color: #8e44ad;
+  background-color: var(--magenta);
   color: white;
   padding: 10px 15px;
   border: none;
@@ -192,7 +193,7 @@
 }
 
 .load-more:hover {
-  background-color: #7d3c9d;
+  background-color: var(--magenta);
 }
 
 /* Search Bar and Filter Button */
@@ -218,7 +219,7 @@
 }
 
 .search-button {
-  background-color: #a100a1;
+  background-color: var(--magenta);
   color: white;
   border: none;
   padding: 8px;
@@ -231,7 +232,7 @@
 }
 
 .filter-button {
-  background-color: #a100a1;
+  background-color: var(--magenta);
   border: none;
   border-radius: 50%;
   width: 40px;

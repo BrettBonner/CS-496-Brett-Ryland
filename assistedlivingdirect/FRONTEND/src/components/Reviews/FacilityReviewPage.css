@@ -53,7 +53,7 @@
 }
 
 .facility-card button {
-  background-color: #8e44ad;
+  background-color: var(--magenta);
   color: white;
   padding: 8px 12px;
   font-size: 0.9rem;
@@ -64,7 +64,7 @@
 }
 
 .facility-card button:hover {
-  background-color: #732d91;
+  background-color: var(--magenta);
 }
 
 /* Main Review Content */
@@ -140,7 +140,7 @@
 }
 
 .review-item {
-  border-left: 4px solid #8e44ad;
+  border-left: 4px solid var(--magenta);
   background-color: #fafafa;
   padding: 12px 15px;
   border-radius: 6px;

@@ -7,16 +7,16 @@
   position: relative;
   text-align: center;
 }
-  
+
 /* Logo Styling */
 .Home-logo {
-  width: 100%; /* Adjust size as needed */
+  width: 100%;
   z-index: 1;
   margin-top: 8%;
 }
- 
+
 .Home-content {
-  position: relative; /* Key for layering */
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -29,7 +29,7 @@
   margin-bottom: 1rem;
   color: var(--dark-blue);
 }
-  
+
 .Home-content h2 {
   font-size: 1.5rem;
   font-weight: 300;
@@ -55,29 +55,49 @@
 
 .featured-image-container {
   width: 300px;
-  height: 200px;
   border-radius: 12px;
   overflow: hidden;
   border: 2px solid var(--dark-blue);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
 }
 
 .featured-image {
   width: 100%;
-  height: 100%;
+  height: 200px;
   object-fit: cover;
-  transition: transform 0.3s ease;
+}
+
+.facility-info {
+  padding: 15px;
+  text-align: center;
+}
+
+.facility-info h3 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--dark-blue);
+  margin: 0 0 10px 0;
+}
+
+.facility-info p {
+  font-size: 0.9rem;
+  color: var(--periwinkle);
+  margin: 5px 0;
 }
 
 /* Side by side info section */
 .info-section {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start; 
+  align-items: flex-start;
   width: 80%;
   max-width: 1000px;
   margin: 40px auto;
-  gap: 80px; 
+  gap: 80px;
 }
 
 .info-text {
@@ -134,10 +154,10 @@
   transition: transform 0.3s ease;
 }
 
-.featured-image:hover, .info-image:hover {
+.info-image:hover {
   transform: scale(1.05);
 }
-  
+
 /* Call to Action Button */
 .cta-button {
   background-color: var(--dark-blue);
@@ -166,6 +186,6 @@
 
 .footer-image {
   width: 100%;
-  display: block; 
+  display: block;
   height: auto;
 }
