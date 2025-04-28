@@ -256,7 +256,7 @@ const Admin = () => {
     
     return (
         <div className="admin-facility-manager">
-        <div className="logo">
+        <div className="admin-logo">
             <Link to="/">
                 <img src="../src/assets/navbarlogo.jpg" alt="Assisted Living Direct" />
             </Link>

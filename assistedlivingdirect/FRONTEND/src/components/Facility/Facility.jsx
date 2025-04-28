@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { useAuth } from "../../context/AuthContext";
-import { saveFacility } from "../../api";
+import { saveFacility, getSavedFacilities } from "../../api";
 import axios from "axios";
 import "./Facility.css";
 
@@ -31,6 +31,7 @@ function Facility({ facilities }) {
     salsCertified: false,
   });
   const [showFiltersPopdown, setShowFiltersPopdown] = useState(false);
+  const [savedFacilityIds, setSavedFacilityIds] = useState(new Set());
   const mapRef = useRef(null);
   const listRef = useRef(null);
   const isUserScrolling = useRef(false);
@@ -54,6 +55,25 @@ function Facility({ facilities }) {
       );
     }
   }, []);
+
+  // Fetch user's saved facilities when user changes
+  useEffect(() => {
+    const fetchSavedFacilities = async () => {
+      if (user) {
+        try {
+          const facilities = await getSavedFacilities(user.username);
+          const savedIds = new Set(facilities.map(facility => facility._id));
+          setSavedFacilityIds(savedIds);
+        } catch (err) {
+          console.error("Failed to fetch saved facilities:", err);
+        }
+      } else {
+        setSavedFacilityIds(new Set());
+      }
+    };
+    
+    fetchSavedFacilities();
+  }, [user]);
 
   // Update userLocation when search query is submitted
   useEffect(() => {
@@ -184,8 +204,16 @@ function Facility({ facilities }) {
 
   const handleSaveFacility = async (facilityId) => {
     if (!user) return alert("Please log in to save facilities.");
+    
+    // Check if already saved
+    if (savedFacilityIds.has(facilityId)) {
+      return; // Do nothing if already saved
+    }
+    
     try {
       await saveFacility(user.username, facilityId);
+      // Update the saved facilities set
+      setSavedFacilityIds(prev => new Set(prev).add(facilityId));
     } catch (err) {
       console.error("Save failed:", err);
     }
@@ -284,6 +312,8 @@ function Facility({ facilities }) {
         {visibleFacilities.map((facility, index) => {
           const lat = parseFloat(facility.lat);
           const lng = parseFloat(facility.lng);
+          const isSaved = savedFacilityIds.has(facility._id);
+          
           return (
             <div
               key={facility._id || index}
@@ -327,13 +357,16 @@ function Facility({ facilities }) {
                 </button>
                 {user && (
                   <button
-                    className="action-button save"
+                    className={`action-button ${isSaved ? "saved" : "save"}`}
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleSaveFacility(facility._id);
+                      if (!isSaved) {
+                        handleSaveFacility(facility._id);
+                      }
                     }}
+                    disabled={isSaved}
                   >
-                    Save
+                    {isSaved ? "Saved!" : "Save"}
                   </button>
                 )}
               </div>

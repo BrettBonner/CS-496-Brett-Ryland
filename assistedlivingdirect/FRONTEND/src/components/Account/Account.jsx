@@ -171,153 +171,173 @@ function Account() {
 
     return (
         <div className="account-container">
-            <div className="notifications">
-                <div className="notification-container">
-                    <h3>Notifications</h3>
-                    {notifications.length > 0 ? (
-                        notifications.map((notif) => (
-                            <div key={notif.id} className="notification">
-                                <span className="notification-message">
-                                    {notif.message} ({notif.timestamp.toLocaleTimeString()})
-                                </span>
-                                <button 
-                                    className="dismiss-notification" 
-                                    onClick={() => dismissNotification(notif.id)}
-                                >
-                                    ×
-                                </button>
-                            </div>
-                        ))
-                    ) : (
-                        <div className="notification">
-                            No new notifications
-                        </div>
-                    )}
-                </div>
-            </div>
-            <div className="logo">
-                <Link to="/">
-                    <img src="../src/assets/navbarlogo.jpg" alt="Assisted Living Direct" />
-                </Link>
-            </div>
-            <h2>Your Account</h2>
+            <h2 className="account-page-title">Your Account</h2>
             {error && <div className="account-error">{error}</div>}
             {success && <div className="account-success">{success}</div>}
-            {!editMode ? (
-                <div className="account-details">
-                    <p><strong>Username:</strong> {user.username}</p>
-                    <p><strong>Email:</strong> {user.email}</p>
-                    <button className="edit-btn" onClick={() => setEditMode(true)}>
-                        Edit Account
-                    </button>
-                    <button className="change-password-btn" onClick={() => setPasswordChangeMode(true)}>
-                        Change Password
-                    </button>
-                    <button className="logout-btn" onClick={handleLogout}>
-                        Log Out
-                    </button>
+            
+            <div className="account-layout">
+                {/* Left Column - Account Information */}
+                <div className="account-left-column">
+                    <div className="account-section">
+                        <h3>Account Information</h3>
+                        {!editMode ? (
+                            <>
+                                <div className="account-details">
+                                    <p><strong>Username:</strong> {user.username}</p>
+                                    <p><strong>Email:</strong> {user.email}</p>
+                                </div>
+                                <div className="account-buttons">
+                                    <button className="edit-btn" onClick={() => setEditMode(true)}>
+                                        Edit Account
+                                    </button>
+                                    <button className="change-password-btn" onClick={() => setPasswordChangeMode(true)}>
+                                        Change Password
+                                    </button>
+                                    <button className="logout-btn" onClick={handleLogout}>
+                                        Log Out
+                                    </button>
+                                </div>
+                            </>
+                        ) : (
+                            <form onSubmit={handleUpdate} className="account-form">
+                                <div className="form-group">
+                                    <label htmlFor="username">Username</label>
+                                    <input
+                                        type="text"
+                                        id="username"
+                                        name="username"
+                                        value={formData.username}
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="email">Email</label>
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                                <div className="form-actions">
+                                    <button type="submit" className="save-btn">
+                                        Save Changes
+                                    </button>
+                                    <button type="button" className="cancel-btn" onClick={() => setEditMode(false)}>
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        )}
+                    </div>
+
+                    {passwordChangeMode && (
+                        <div className="account-section">
+                            <h3>Change Password</h3>
+                            <form onSubmit={handleChangePassword} className="password-form">
+                                <div className="form-group">
+                                    <label htmlFor="currentPassword">Current Password</label>
+                                    <input
+                                        type="password"
+                                        id="currentPassword"
+                                        name="currentPassword"
+                                        value={passwordForm.currentPassword}
+                                        onChange={handlePasswordInputChange}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="newPassword">New Password</label>
+                                    <input
+                                        type="password"
+                                        id="newPassword"
+                                        name="newPassword"
+                                        value={passwordForm.newPassword}
+                                        onChange={handlePasswordInputChange}
+                                    />
+                                </div>
+                                <div className="form-actions">
+                                    <button type="submit" className="save-btn">
+                                        Update Password
+                                    </button>
+                                    <button type="button" className="cancel-btn" onClick={() => setPasswordChangeMode(false)}>
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    )}
+
+                    <div className="account-section">
+                        <h3>Delete Account</h3>
+                        <div className="delete-section">
+                            <p>Enter your password to permanently delete your account:</p>
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="Password"
+                                className="password-input"
+                            />
+                            <button className="delete-btn" onClick={handleDelete}>
+                                Delete Account
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            ) : (
-                <form onSubmit={handleUpdate} className="account-form">
-                    <div className="form-group">
-                        <label htmlFor="username">Username</label>
-                        <input
-                            type="text"
-                            id="username"
-                            name="username"
-                            value={formData.username}
-                            onChange={handleInputChange}
-                        />
+
+                {/* Right Column - Notifications and Saved Facilities */}
+                <div className="account-right-column">
+                    <div className="account-section">
+                        <h3>Notifications</h3>
+                        <div className="notification-container">
+                            {notifications.length > 0 ? (
+                                notifications.map((notif) => (
+                                    <div key={notif.id} className="notification">
+                                        <span className="notification-message">
+                                            {notif.message} ({notif.timestamp.toLocaleTimeString()})
+                                        </span>
+                                        <button 
+                                            className="dismiss-notification" 
+                                            onClick={() => dismissNotification(notif.id)}
+                                        >
+                                            ×
+                                        </button>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="notification">
+                                    No new notifications
+                                </div>
+                            )}
+                        </div>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="email">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                        />
+
+                    <div className="account-section">
+                        <h3>Saved Facilities</h3>
+                        {savedFacilities.length === 0 ? (
+                            <p>No saved facilities yet.</p>
+                        ) : (
+                            <ul className="saved-facilities-list">
+                                {savedFacilities.map((facility) => (
+                                    <li key={facility._id}>
+                                        {facility.Licensee || "No Name"} - {facility["Street Address"] || "No Address"}
+                                        <button
+                                            className="remove-btn"
+                                            onClick={() => {
+                                                removeSavedFacility(user.username, facility._id).then(() => {
+                                                    setSavedFacilities(savedFacilities.filter(f => f._id !== facility._id));
+                                                });
+                                            }}
+                                        >
+                                            Remove
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
                     </div>
-                    <div className="form-actions">
-                        <button type="submit" className="save-btn">
-                            Save Changes
-                        </button>
-                        <button type="button" className="cancel-btn" onClick={() => setEditMode(false)}>
-                            Cancel
-                        </button>
-                    </div>
-                </form>
-            )}
-            {passwordChangeMode && (
-                <form onSubmit={handleChangePassword} className="password-form">
-                    <div className="form-group">
-                        <label htmlFor="currentPassword">Current Password</label>
-                        <input
-                            type="password"
-                            id="currentPassword"
-                            name="currentPassword"
-                            value={passwordForm.currentPassword}
-                            onChange={handlePasswordInputChange}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="newPassword">New Password</label>
-                        <input
-                            type="password"
-                            id="newPassword"
-                            name="newPassword"
-                            value={passwordForm.newPassword}
-                            onChange={handlePasswordInputChange}
-                        />
-                    </div>
-                    <div className="form-actions">
-                        <button type="submit" className="save-btn">
-                            Update Password
-                        </button>
-                        <button type="button" className="cancel-btn" onClick={() => setPasswordChangeMode(false)}>
-                            Cancel
-                        </button>
-                    </div>
-                </form>
-            )}
-            <div className="saved-facilities-section">
-                <h3>Saved Facilities</h3>
-                {savedFacilities.length === 0 ? (
-                    <p>No saved facilities yet.</p>
-                ) : (
-                    <ul>
-                        {savedFacilities.map((facility) => (
-                            <li key={facility._id}>
-                                {facility.Licensee || "No Name"} - {facility["Street Address"] || "No Address"}
-                                <button
-                                    className="remove-btn"
-                                    onClick={() => {
-                                        removeSavedFacility(user.username, facility._id).then(() => {
-                                            setSavedFacilities(savedFacilities.filter(f => f._id !== facility._id));
-                                        });
-                                    }}
-                                >
-                                    Remove
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-                )}
-            </div>
-            <div className="delete-section">
-                <h3>Delete Account</h3>
-                <p>Enter your password to permanently delete your account:</p>
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Password"
-                    className="password-input"
-                />
-                <button className="delete-btn" onClick={handleDelete}>
-                    Delete Account
-                </button>
+                </div>
             </div>
         </div>
     );

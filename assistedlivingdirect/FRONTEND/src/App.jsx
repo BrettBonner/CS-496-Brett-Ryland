@@ -57,7 +57,12 @@ function App() {
                     } />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
-                    <Route path="/account" element={<Account />} />
+                    <Route path="/account" element={
+                        <>
+                            <Navbar />
+                            <Account />
+                        </>
+                    } />
                     <Route path="/reviews" element={<>
                     <Navbar />
                     <Reviews facilities={facilities} />

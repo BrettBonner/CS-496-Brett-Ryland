@@ -172,6 +172,20 @@
   border-color: var(--magenta);  /* Changed from #4a4a4a to var(--magenta) */
 }
 
+.action-button.saved {
+  background-color: var(--gold);
+  color: white;
+  cursor: default;
+}
+
+.action-button.saved:hover {
+  background-color: var(--gold);
+}
+
+.action-button.save {
+  background-color: var(--magenta);
+}
+
 /* Map container */
 .map-container {
   position: relative;
