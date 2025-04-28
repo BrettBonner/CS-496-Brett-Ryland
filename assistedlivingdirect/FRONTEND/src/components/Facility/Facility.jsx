@@ -5,6 +5,8 @@ import { saveFacility } from "../../api";
 import axios from "axios";
 import "./Facility.css";
 
+import { Mail, Phone, Map } from 'lucide-react';
+
 const mapContainerStyle = {
   width: "100%",
   height: "100vh",
@@ -314,9 +316,15 @@ function Facility({ facilities }) {
                 <div className="sals-certified">SALS Certified</div>
               )}
               <div className="facility-actions">
-                <button className="action-button">Email</button>
-                <button className="action-button">Call</button>
-                <button className="action-button">Get Directions</button>
+                <button className="action-button">
+                  <Mail/> Email
+                </button>
+                <button className="action-button">
+                  <Phone/> Call
+                </button>
+                <button className="action-button">
+                  <Map/> Get Directions
+                </button>
                 {user && (
                   <button
                     className="action-button save"
