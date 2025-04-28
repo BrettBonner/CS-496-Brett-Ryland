@@ -9,8 +9,8 @@ function Home({ fetchFacilities }) {
     <section className="Home-container">
       <div className="Home-content">
         <img src="../src/assets/MainLogo.png" alt="Main Logo" className="Home-logo" />
-        <h2>Find The Perfect Home For Your Loved Ones</h2>
-        <h1>Discover All Assisted Living in Maryland</h1>
+        <h2>Featured Facilities</h2>
+        <h1>Explore Facilities with Current Availability</h1>
 
         {/* ✅ Button now fetches data and navigates to a new page */}
         <button

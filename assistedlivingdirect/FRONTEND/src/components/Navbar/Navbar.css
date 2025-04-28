@@ -66,7 +66,7 @@
 }
 
 .navbar .logo img:hover {
-  box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.6); /* white glow */
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.6); /* white glow */
   transition: box-shadow 0.3s ease;
   cursor: pointer;
 }
